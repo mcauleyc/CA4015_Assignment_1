@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# # Cluster Analysis
+
 # In[1]:
 
 
@@ -16,52 +18,106 @@ from sklearn.cluster import KMeans
 # In[2]:
 
 
-choice = pd.read_csv("./IGTdataSteingroever2014/choice_100.csv")
-choice
+df = pd.read_csv("./data/agg_all.csv", index_col=0)
+df
 
 
-# In[18]:
+# 100 has most studies, 95 has 1 and 150 in between.
+# if i do totals of each picked and amount won for each dataset and normalise the amount of number of trials and decks picked over total picks.
+# 
+# could also look at if its really after 50th trial they start to go one way or the other.
+
+# In[3]:
 
 
-loss = pd.read_csv("./IGTdataSteingroever2014/lo_100.csv")
-win = pd.read_csv("./IGTdataSteingroever2014/wi_100.csv")
-loss
-
-
-# In[28]:
-
-
-plt.scatter(win, loss)
+plt.scatter(df['Total'], df['A'])
 # plt.xlim(-180,180)
 # plt.ylim(-90,90)
 plt.show()
 
 
-# In[29]:
+# In[4]:
 
 
-x = data.iloc[:,1:3] # 1t for rows and second for columns
+plt.scatter(df['Total'], df['B'])
+# plt.xlim(-180,180)
+# plt.ylim(-90,90)
+plt.show()
+
+
+# In[5]:
+
+
+plt.scatter(df['Total'], df['C'])
+# plt.xlim(-180,180)
+# plt.ylim(-90,90)
+plt.show()
+
+
+# In[6]:
+
+
+plt.scatter(df['Total'], df['D'])
+# plt.xlim(-180,180)
+# plt.ylim(-90,90)
+plt.show()
+
+
+# In[7]:
+
+
+plt.scatter(df['A'], df['B'])
+plt.show()
+
+
+# In[8]:
+
+
+x = df.iloc[:,:2] # 1t for rows and second for columns
 x
 
 
-# In[31]:
+# In[9]:
 
 
 kmeans = KMeans(3)
 kmeans.fit(x)
 
 
-# In[33]:
+# In[10]:
 
 
 identified_clusters = kmeans.fit_predict(x)
 identified_clusters
 
 
-# In[35]:
+# In[11]:
 
 
-data_with_clusters = data.copy()
+data_with_clusters = df.copy()
 data_with_clusters['Clusters'] = identified_clusters 
-plt.scatter(data_with_clusters['Choice_2'],data_with_clusters['Choice_3'],c=data_with_clusters['Clusters'],cmap='rainbow')
+plt.scatter(data_with_clusters['Total'],data_with_clusters['A'],c=data_with_clusters['Clusters'],cmap='rainbow')
+
+
+# In[12]:
+
+
+y = df.iloc[:,[0,2]] # 1t for rows and second for columns
+y
+
+
+# In[13]:
+
+
+kmeans = KMeans(3)
+kmeans.fit(x)
+data_with_clusters = df.copy()
+data_with_clusters['Clusters'] = identified_clusters 
+plt.scatter(data_with_clusters['Total'],data_with_clusters['B'],c=data_with_clusters['Clusters'],cmap='rainbow')
+
+
+# In[17]:
+
+
+
 

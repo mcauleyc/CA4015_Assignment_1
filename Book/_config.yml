@@ -1,9 +1,9 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: Clustering Analysis on Iowa Gambling Task
+title: Clustering Analysis of Iowa Gambling Task
 author: Cliodhna McAuley
-logo: logo.png
+logo: DCU-logo.jpg
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
