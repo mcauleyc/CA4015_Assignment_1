@@ -6,7 +6,7 @@ The Iowa gambling task is a psychological task thought to simulate real-life dec
 
 My task was to process the data from the Iowa Gambling Task and perform k-means clustering on it. I then performed clustering while preserving the privacy of each lab to see if that altered the results in any way. 
 
-The link to the data paper I used, 'Data from 617 Healthy Participants Performing the Iowa Gambling Task: A “Many Labs” Collaboration' is [here] (https://openpsychologydata.metajnl.com/articles/10.5334/jopd.ak/).
+The link to the data paper I used, 'Data from 617 Healthy Participants Performing the Iowa Gambling Task: A “Many Labs” Collaboration' is [here](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.ak/).
 
 My Jupyter Book is [here](https://www.google.com/).
 
