@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Part 1 &#8212; My sample book</title>
+    <title>Data Processing &#8212; Clustering Analysis of Iowa Gambling Task</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,6 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Cluster Analysis" href="clustering.html" />
+    <link rel="prev" title="Iowa Gambling Task" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -73,10 +75,10 @@
         
       
       
-      <img src="_static/logo.png" class="logo" alt="logo">
+      <img src="_static/DCU-logo.jpg" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">My sample book</h1>
+      <h1 class="site-logo" id="site-title">Clustering Analysis of Iowa Gambling Task</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -87,19 +89,19 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Welcome to your Jupyter Book
+   Iowa Gambling Task
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="markdown.html">
-   Markdown Files
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Data Processing
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="notebooks.html">
-   Content with notebooks
+  <a class="reference internal" href="clustering.html">
+   Cluster Analysis
   </a>
  </li>
 </ul>
@@ -208,12 +210,22 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
+   Data Processing
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-1">
    Part 1
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#part-2">
    Part 2
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3">
+   Part 3
   </a>
  </li>
 </ul>
@@ -227,7 +239,9 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="section" id="data-processing">
+<h1>Data Processing<a class="headerlink" href="#data-processing" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -237,88 +251,18 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">choice_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/choice_100.csv&quot;</span><span class="p">)</span>
-<span class="n">choice_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/choice_150.csv&quot;</span><span class="p">)</span>
-<span class="n">choice_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/choice_95.csv&quot;</span><span class="p">)</span>
-<span class="n">index_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/index_100.csv&quot;</span><span class="p">)</span>
-<span class="n">index_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/index_100.csv&quot;</span><span class="p">)</span>
-<span class="n">index_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/index_95.csv&quot;</span><span class="p">)</span>
-<span class="n">lo_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/lo_100.csv&quot;</span><span class="p">)</span>
-<span class="n">lo_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/lo_100.csv&quot;</span><span class="p">)</span>
-<span class="n">lo_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/lo_100.csv&quot;</span><span class="p">)</span>
-<span class="n">wi_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/wi_100.csv&quot;</span><span class="p">)</span>
-<span class="n">wi_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/wi_100.csv&quot;</span><span class="p">)</span>
-<span class="n">wi_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/wi_100.csv&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_96658</span><span class="o">/</span><span class="mf">1221724174.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">choice_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/choice_100.csv&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">choice_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/choice_150.csv&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">choice_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/choice_95.csv&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">index_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/index_100.csv&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">index_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/index_100.csv&quot;</span><span class="p">)</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/util/_decorators.py</span> in <span class="ni">wrapper</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">309</span>                     <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">310</span>                 <span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">311</span>             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">312</span> 
-<span class="g g-Whitespace">    </span><span class="mi">313</span>         <span class="k">return</span> <span class="n">wrapper</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">584</span>     <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">585</span> 
-<span class="ne">--&gt; </span><span class="mi">586</span>     <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">587</span> 
-<span class="g g-Whitespace">    </span><span class="mi">588</span> 
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">480</span> 
-<span class="g g-Whitespace">    </span><span class="mi">481</span>     <span class="c1"># Create the parser.</span>
-<span class="ne">--&gt; </span><span class="mi">482</span>     <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">483</span> 
-<span class="g g-Whitespace">    </span><span class="mi">484</span>     <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">__init__</span><span class="nt">(self, f, engine, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">809</span>             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">810</span> 
-<span class="ne">--&gt; </span><span class="mi">811</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">812</span> 
-<span class="g g-Whitespace">    </span><span class="mi">813</span>     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">_make_engine</span><span class="nt">(self, engine)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1038</span>             <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1039</span>         <span class="c1"># error: Too many arguments for &quot;ParserBase&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1040</span>         <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">engine</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>  <span class="c1"># type: ignore[call-arg]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1041</span> 
-<span class="g g-Whitespace">   </span><span class="mi">1042</span>     <span class="k">def</span> <span class="nf">_failover_to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/c_parser_wrapper.py</span> in <span class="ni">__init__</span><span class="nt">(self, src, **kwds)</span>
-<span class="g g-Whitespace">     </span><span class="mi">49</span> 
-<span class="g g-Whitespace">     </span><span class="mi">50</span>         <span class="c1"># open handles</span>
-<span class="ne">---&gt; </span><span class="mi">51</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_open_handles</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">52</span>         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="g g-Whitespace">     </span><span class="mi">53</span> 
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/base_parser.py</span> in <span class="ni">_open_handles</span><span class="nt">(self, src, kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">227</span>             <span class="n">memory_map</span><span class="o">=</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-<span class="g g-Whitespace">    </span><span class="mi">228</span>             <span class="n">storage_options</span><span class="o">=</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="ne">--&gt; </span><span class="mi">229</span>             <span class="n">errors</span><span class="o">=</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
-<span class="g g-Whitespace">    </span><span class="mi">230</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">231</span> 
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/common.py</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">705</span>                 <span class="n">encoding</span><span class="o">=</span><span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">706</span>                 <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">707</span>                 <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">708</span>             <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">709</span>         <span class="k">else</span><span class="p">:</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;./IGTdataSteingroever2014/choice_100.csv&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">choice_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/choice_100.csv&quot;</span><span class="p">)</span>
+<span class="n">choice_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/choice_150.csv&quot;</span><span class="p">)</span>
+<span class="n">choice_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/choice_95.csv&quot;</span><span class="p">)</span>
+<span class="n">index_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/index_100.csv&quot;</span><span class="p">)</span>
+<span class="n">index_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/index_150.csv&quot;</span><span class="p">)</span>
+<span class="n">index_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/index_95.csv&quot;</span><span class="p">)</span>
+<span class="n">lo_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/lo_100.csv&quot;</span><span class="p">)</span>
+<span class="n">lo_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/lo_150.csv&quot;</span><span class="p">)</span>
+<span class="n">lo_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/lo_95.csv&quot;</span><span class="p">)</span>
+<span class="n">wi_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/wi_100.csv&quot;</span><span class="p">)</span>
+<span class="n">wi_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/wi_150.csv&quot;</span><span class="p">)</span>
+<span class="n">wi_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/wi_95.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -424,6 +368,7 @@ Subj_5       50       50       50       50        50
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="part-1">
 <h1>Part 1<a class="headerlink" href="#part-1" title="Permalink to this headline">¶</a></h1>
 <p>First I will go through each individual dataframe and see if there are any obvious errors, data type differences and and nulls that should be changed.</p>
@@ -437,6 +382,109 @@ Subj_5       50       50       50       50        50
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Index: 15 entries, Subj_1 to Subj_15
+Data columns (total 95 columns):
+ #   Column     Non-Null Count  Dtype
+---  ------     --------------  -----
+ 0   Choice_1   15 non-null     int64
+ 1   Choice_2   15 non-null     int64
+ 2   Choice_3   15 non-null     int64
+ 3   Choice_4   15 non-null     int64
+ 4   Choice_5   15 non-null     int64
+ 5   Choice_6   15 non-null     int64
+ 6   Choice_7   15 non-null     int64
+ 7   Choice_8   15 non-null     int64
+ 8   Choice_9   15 non-null     int64
+ 9   Choice_10  15 non-null     int64
+ 10  Choice_11  15 non-null     int64
+ 11  Choice_12  15 non-null     int64
+ 12  Choice_13  15 non-null     int64
+ 13  Choice_14  15 non-null     int64
+ 14  Choice_15  15 non-null     int64
+ 15  Choice_16  15 non-null     int64
+ 16  Choice_17  15 non-null     int64
+ 17  Choice_18  15 non-null     int64
+ 18  Choice_19  15 non-null     int64
+ 19  Choice_20  15 non-null     int64
+ 20  Choice_21  15 non-null     int64
+ 21  Choice_22  15 non-null     int64
+ 22  Choice_23  15 non-null     int64
+ 23  Choice_24  15 non-null     int64
+ 24  Choice_25  15 non-null     int64
+ 25  Choice_26  15 non-null     int64
+ 26  Choice_27  15 non-null     int64
+ 27  Choice_28  15 non-null     int64
+ 28  Choice_29  15 non-null     int64
+ 29  Choice_30  15 non-null     int64
+ 30  Choice_31  15 non-null     int64
+ 31  Choice_32  15 non-null     int64
+ 32  Choice_33  15 non-null     int64
+ 33  Choice_34  15 non-null     int64
+ 34  Choice_35  15 non-null     int64
+ 35  Choice_36  15 non-null     int64
+ 36  Choice_37  15 non-null     int64
+ 37  Choice_38  15 non-null     int64
+ 38  Choice_39  15 non-null     int64
+ 39  Choice_40  15 non-null     int64
+ 40  Choice_41  15 non-null     int64
+ 41  Choice_42  15 non-null     int64
+ 42  Choice_43  15 non-null     int64
+ 43  Choice_44  15 non-null     int64
+ 44  Choice_45  15 non-null     int64
+ 45  Choice_46  15 non-null     int64
+ 46  Choice_47  15 non-null     int64
+ 47  Choice_48  15 non-null     int64
+ 48  Choice_49  15 non-null     int64
+ 49  Choice_50  15 non-null     int64
+ 50  Choice_51  15 non-null     int64
+ 51  Choice_52  15 non-null     int64
+ 52  Choice_53  15 non-null     int64
+ 53  Choice_54  15 non-null     int64
+ 54  Choice_55  15 non-null     int64
+ 55  Choice_56  15 non-null     int64
+ 56  Choice_57  15 non-null     int64
+ 57  Choice_58  15 non-null     int64
+ 58  Choice_59  15 non-null     int64
+ 59  Choice_60  15 non-null     int64
+ 60  Choice_61  15 non-null     int64
+ 61  Choice_62  15 non-null     int64
+ 62  Choice_63  15 non-null     int64
+ 63  Choice_64  15 non-null     int64
+ 64  Choice_65  15 non-null     int64
+ 65  Choice_66  15 non-null     int64
+ 66  Choice_67  15 non-null     int64
+ 67  Choice_68  15 non-null     int64
+ 68  Choice_69  15 non-null     int64
+ 69  Choice_70  15 non-null     int64
+ 70  Choice_71  15 non-null     int64
+ 71  Choice_72  15 non-null     int64
+ 72  Choice_73  15 non-null     int64
+ 73  Choice_74  15 non-null     int64
+ 74  Choice_75  15 non-null     int64
+ 75  Choice_76  15 non-null     int64
+ 76  Choice_77  15 non-null     int64
+ 77  Choice_78  15 non-null     int64
+ 78  Choice_79  15 non-null     int64
+ 79  Choice_80  15 non-null     int64
+ 80  Choice_81  15 non-null     int64
+ 81  Choice_82  15 non-null     int64
+ 82  Choice_83  15 non-null     int64
+ 83  Choice_84  15 non-null     int64
+ 84  Choice_85  15 non-null     int64
+ 85  Choice_86  15 non-null     int64
+ 86  Choice_87  15 non-null     int64
+ 87  Choice_88  15 non-null     int64
+ 88  Choice_89  15 non-null     int64
+ 89  Choice_90  15 non-null     int64
+ 90  Choice_91  15 non-null     int64
+ 91  Choice_92  15 non-null     int64
+ 92  Choice_93  15 non-null     int64
+ 93  Choice_94  15 non-null     int64
+ 94  Choice_95  15 non-null     int64
+dtypes: int64(95)
+memory usage: 11.2+ KB
+None
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 Index: 504 entries, Subj_1 to Subj_504
 Data columns (total 100 columns):
  #   Column      Non-Null Count  Dtype
@@ -550,109 +598,6 @@ Columns: 150 entries, Choice_1 to Choice_150
 dtypes: int64(150)
 memory usage: 115.6+ KB
 None
-&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Index: 15 entries, Subj_1 to Subj_15
-Data columns (total 95 columns):
- #   Column     Non-Null Count  Dtype
----  ------     --------------  -----
- 0   Choice_1   15 non-null     int64
- 1   Choice_2   15 non-null     int64
- 2   Choice_3   15 non-null     int64
- 3   Choice_4   15 non-null     int64
- 4   Choice_5   15 non-null     int64
- 5   Choice_6   15 non-null     int64
- 6   Choice_7   15 non-null     int64
- 7   Choice_8   15 non-null     int64
- 8   Choice_9   15 non-null     int64
- 9   Choice_10  15 non-null     int64
- 10  Choice_11  15 non-null     int64
- 11  Choice_12  15 non-null     int64
- 12  Choice_13  15 non-null     int64
- 13  Choice_14  15 non-null     int64
- 14  Choice_15  15 non-null     int64
- 15  Choice_16  15 non-null     int64
- 16  Choice_17  15 non-null     int64
- 17  Choice_18  15 non-null     int64
- 18  Choice_19  15 non-null     int64
- 19  Choice_20  15 non-null     int64
- 20  Choice_21  15 non-null     int64
- 21  Choice_22  15 non-null     int64
- 22  Choice_23  15 non-null     int64
- 23  Choice_24  15 non-null     int64
- 24  Choice_25  15 non-null     int64
- 25  Choice_26  15 non-null     int64
- 26  Choice_27  15 non-null     int64
- 27  Choice_28  15 non-null     int64
- 28  Choice_29  15 non-null     int64
- 29  Choice_30  15 non-null     int64
- 30  Choice_31  15 non-null     int64
- 31  Choice_32  15 non-null     int64
- 32  Choice_33  15 non-null     int64
- 33  Choice_34  15 non-null     int64
- 34  Choice_35  15 non-null     int64
- 35  Choice_36  15 non-null     int64
- 36  Choice_37  15 non-null     int64
- 37  Choice_38  15 non-null     int64
- 38  Choice_39  15 non-null     int64
- 39  Choice_40  15 non-null     int64
- 40  Choice_41  15 non-null     int64
- 41  Choice_42  15 non-null     int64
- 42  Choice_43  15 non-null     int64
- 43  Choice_44  15 non-null     int64
- 44  Choice_45  15 non-null     int64
- 45  Choice_46  15 non-null     int64
- 46  Choice_47  15 non-null     int64
- 47  Choice_48  15 non-null     int64
- 48  Choice_49  15 non-null     int64
- 49  Choice_50  15 non-null     int64
- 50  Choice_51  15 non-null     int64
- 51  Choice_52  15 non-null     int64
- 52  Choice_53  15 non-null     int64
- 53  Choice_54  15 non-null     int64
- 54  Choice_55  15 non-null     int64
- 55  Choice_56  15 non-null     int64
- 56  Choice_57  15 non-null     int64
- 57  Choice_58  15 non-null     int64
- 58  Choice_59  15 non-null     int64
- 59  Choice_60  15 non-null     int64
- 60  Choice_61  15 non-null     int64
- 61  Choice_62  15 non-null     int64
- 62  Choice_63  15 non-null     int64
- 63  Choice_64  15 non-null     int64
- 64  Choice_65  15 non-null     int64
- 65  Choice_66  15 non-null     int64
- 66  Choice_67  15 non-null     int64
- 67  Choice_68  15 non-null     int64
- 68  Choice_69  15 non-null     int64
- 69  Choice_70  15 non-null     int64
- 70  Choice_71  15 non-null     int64
- 71  Choice_72  15 non-null     int64
- 72  Choice_73  15 non-null     int64
- 73  Choice_74  15 non-null     int64
- 74  Choice_75  15 non-null     int64
- 75  Choice_76  15 non-null     int64
- 76  Choice_77  15 non-null     int64
- 77  Choice_78  15 non-null     int64
- 78  Choice_79  15 non-null     int64
- 79  Choice_80  15 non-null     int64
- 80  Choice_81  15 non-null     int64
- 81  Choice_82  15 non-null     int64
- 82  Choice_83  15 non-null     int64
- 83  Choice_84  15 non-null     int64
- 84  Choice_85  15 non-null     int64
- 85  Choice_86  15 non-null     int64
- 86  Choice_87  15 non-null     int64
- 87  Choice_88  15 non-null     int64
- 88  Choice_89  15 non-null     int64
- 89  Choice_90  15 non-null     int64
- 90  Choice_91  15 non-null     int64
- 91  Choice_92  15 non-null     int64
- 92  Choice_93  15 non-null     int64
- 93  Choice_94  15 non-null     int64
- 94  Choice_95  15 non-null     int64
-dtypes: int64(95)
-memory usage: 11.2+ KB
-None
 </pre></div>
 </div>
 </div>
@@ -687,14 +632,14 @@ dtypes: int64(1), object(1)
 memory usage: 8.0+ KB
 None
 &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 504 entries, 0 to 503
+RangeIndex: 98 entries, 0 to 97
 Data columns (total 2 columns):
  #   Column  Non-Null Count  Dtype 
 ---  ------  --------------  ----- 
- 0   Subj    504 non-null    int64 
- 1   Study   504 non-null    object
+ 0   Subj    98 non-null     int64 
+ 1   Study   98 non-null     object
 dtypes: int64(1), object(1)
-memory usage: 8.0+ KB
+memory usage: 1.7+ KB
 None
 </pre></div>
 </div>
@@ -710,112 +655,107 @@ None
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Index: 504 entries, Subj_1 to Subj_504
-Data columns (total 100 columns):
- #   Column      Non-Null Count  Dtype
----  ------      --------------  -----
- 0   Losses_1    504 non-null    int64
- 1   Losses_2    504 non-null    int64
- 2   Losses_3    504 non-null    int64
- 3   Losses_4    504 non-null    int64
- 4   Losses_5    504 non-null    int64
- 5   Losses_6    504 non-null    int64
- 6   Losses_7    504 non-null    int64
- 7   Losses_8    504 non-null    int64
- 8   Losses_9    504 non-null    int64
- 9   Losses_10   504 non-null    int64
- 10  Losses_11   504 non-null    int64
- 11  Losses_12   504 non-null    int64
- 12  Losses_13   504 non-null    int64
- 13  Losses_14   504 non-null    int64
- 14  Losses_15   504 non-null    int64
- 15  Losses_16   504 non-null    int64
- 16  Losses_17   504 non-null    int64
- 17  Losses_18   504 non-null    int64
- 18  Losses_19   504 non-null    int64
- 19  Losses_20   504 non-null    int64
- 20  Losses_21   504 non-null    int64
- 21  Losses_22   504 non-null    int64
- 22  Losses_23   504 non-null    int64
- 23  Losses_24   504 non-null    int64
- 24  Losses_25   504 non-null    int64
- 25  Losses_26   504 non-null    int64
- 26  Losses_27   504 non-null    int64
- 27  Losses_28   504 non-null    int64
- 28  Losses_29   504 non-null    int64
- 29  Losses_30   504 non-null    int64
- 30  Losses_31   504 non-null    int64
- 31  Losses_32   504 non-null    int64
- 32  Losses_33   504 non-null    int64
- 33  Losses_34   504 non-null    int64
- 34  Losses_35   504 non-null    int64
- 35  Losses_36   504 non-null    int64
- 36  Losses_37   504 non-null    int64
- 37  Losses_38   504 non-null    int64
- 38  Losses_39   504 non-null    int64
- 39  Losses_40   504 non-null    int64
- 40  Losses_41   504 non-null    int64
- 41  Losses_42   504 non-null    int64
- 42  Losses_43   504 non-null    int64
- 43  Losses_44   504 non-null    int64
- 44  Losses_45   504 non-null    int64
- 45  Losses_46   504 non-null    int64
- 46  Losses_47   504 non-null    int64
- 47  Losses_48   504 non-null    int64
- 48  Losses_49   504 non-null    int64
- 49  Losses_50   504 non-null    int64
- 50  Losses_51   504 non-null    int64
- 51  Losses_52   504 non-null    int64
- 52  Losses_53   504 non-null    int64
- 53  Losses_54   504 non-null    int64
- 54  Losses_55   504 non-null    int64
- 55  Losses_56   504 non-null    int64
- 56  Losses_57   504 non-null    int64
- 57  Losses_58   504 non-null    int64
- 58  Losses_59   504 non-null    int64
- 59  Losses_60   504 non-null    int64
- 60  Losses_61   504 non-null    int64
- 61  Losses_62   504 non-null    int64
- 62  Losses_63   504 non-null    int64
- 63  Losses_64   504 non-null    int64
- 64  Losses_65   504 non-null    int64
- 65  Losses_66   504 non-null    int64
- 66  Losses_67   504 non-null    int64
- 67  Losses_68   504 non-null    int64
- 68  Losses_69   504 non-null    int64
- 69  Losses_70   504 non-null    int64
- 70  Losses_71   504 non-null    int64
- 71  Losses_72   504 non-null    int64
- 72  Losses_73   504 non-null    int64
- 73  Losses_74   504 non-null    int64
- 74  Losses_75   504 non-null    int64
- 75  Losses_76   504 non-null    int64
- 76  Losses_77   504 non-null    int64
- 77  Losses_78   504 non-null    int64
- 78  Losses_79   504 non-null    int64
- 79  Losses_80   504 non-null    int64
- 80  Losses_81   504 non-null    int64
- 81  Losses_82   504 non-null    int64
- 82  Losses_83   504 non-null    int64
- 83  Losses_84   504 non-null    int64
- 84  Losses_85   504 non-null    int64
- 85  Losses_86   504 non-null    int64
- 86  Losses_87   504 non-null    int64
- 87  Losses_88   504 non-null    int64
- 88  Losses_89   504 non-null    int64
- 89  Losses_90   504 non-null    int64
- 90  Losses_91   504 non-null    int64
- 91  Losses_92   504 non-null    int64
- 92  Losses_93   504 non-null    int64
- 93  Losses_94   504 non-null    int64
- 94  Losses_95   504 non-null    int64
- 95  Losses_96   504 non-null    int64
- 96  Losses_97   504 non-null    int64
- 97  Losses_98   504 non-null    int64
- 98  Losses_99   504 non-null    int64
- 99  Losses_100  504 non-null    int64
-dtypes: int64(100)
-memory usage: 397.7+ KB
+Index: 15 entries, Subj_1 to Subj_15
+Data columns (total 95 columns):
+ #   Column     Non-Null Count  Dtype
+---  ------     --------------  -----
+ 0   Losses_1   15 non-null     int64
+ 1   Losses_2   15 non-null     int64
+ 2   Losses_3   15 non-null     int64
+ 3   Losses_4   15 non-null     int64
+ 4   Losses_5   15 non-null     int64
+ 5   Losses_6   15 non-null     int64
+ 6   Losses_7   15 non-null     int64
+ 7   Losses_8   15 non-null     int64
+ 8   Losses_9   15 non-null     int64
+ 9   Losses_10  15 non-null     int64
+ 10  Losses_11  15 non-null     int64
+ 11  Losses_12  15 non-null     int64
+ 12  Losses_13  15 non-null     int64
+ 13  Losses_14  15 non-null     int64
+ 14  Losses_15  15 non-null     int64
+ 15  Losses_16  15 non-null     int64
+ 16  Losses_17  15 non-null     int64
+ 17  Losses_18  15 non-null     int64
+ 18  Losses_19  15 non-null     int64
+ 19  Losses_20  15 non-null     int64
+ 20  Losses_21  15 non-null     int64
+ 21  Losses_22  15 non-null     int64
+ 22  Losses_23  15 non-null     int64
+ 23  Losses_24  15 non-null     int64
+ 24  Losses_25  15 non-null     int64
+ 25  Losses_26  15 non-null     int64
+ 26  Losses_27  15 non-null     int64
+ 27  Losses_28  15 non-null     int64
+ 28  Losses_29  15 non-null     int64
+ 29  Losses_30  15 non-null     int64
+ 30  Losses_31  15 non-null     int64
+ 31  Losses_32  15 non-null     int64
+ 32  Losses_33  15 non-null     int64
+ 33  Losses_34  15 non-null     int64
+ 34  Losses_35  15 non-null     int64
+ 35  Losses_36  15 non-null     int64
+ 36  Losses_37  15 non-null     int64
+ 37  Losses_38  15 non-null     int64
+ 38  Losses_39  15 non-null     int64
+ 39  Losses_40  15 non-null     int64
+ 40  Losses_41  15 non-null     int64
+ 41  Losses_42  15 non-null     int64
+ 42  Losses_43  15 non-null     int64
+ 43  Losses_44  15 non-null     int64
+ 44  Losses_45  15 non-null     int64
+ 45  Losses_46  15 non-null     int64
+ 46  Losses_47  15 non-null     int64
+ 47  Losses_48  15 non-null     int64
+ 48  Losses_49  15 non-null     int64
+ 49  Losses_50  15 non-null     int64
+ 50  Losses_51  15 non-null     int64
+ 51  Losses_52  15 non-null     int64
+ 52  Losses_53  15 non-null     int64
+ 53  Losses_54  15 non-null     int64
+ 54  Losses_55  15 non-null     int64
+ 55  Losses_56  15 non-null     int64
+ 56  Losses_57  15 non-null     int64
+ 57  Losses_58  15 non-null     int64
+ 58  Losses_59  15 non-null     int64
+ 59  Losses_60  15 non-null     int64
+ 60  Losses_61  15 non-null     int64
+ 61  Losses_62  15 non-null     int64
+ 62  Losses_63  15 non-null     int64
+ 63  Losses_64  15 non-null     int64
+ 64  Losses_65  15 non-null     int64
+ 65  Losses_66  15 non-null     int64
+ 66  Losses_67  15 non-null     int64
+ 67  Losses_68  15 non-null     int64
+ 68  Losses_69  15 non-null     int64
+ 69  Losses_70  15 non-null     int64
+ 70  Losses_71  15 non-null     int64
+ 71  Losses_72  15 non-null     int64
+ 72  Losses_73  15 non-null     int64
+ 73  Losses_74  15 non-null     int64
+ 74  Losses_75  15 non-null     int64
+ 75  Losses_76  15 non-null     int64
+ 76  Losses_77  15 non-null     int64
+ 77  Losses_78  15 non-null     int64
+ 78  Losses_79  15 non-null     int64
+ 79  Losses_80  15 non-null     int64
+ 80  Losses_81  15 non-null     int64
+ 81  Losses_82  15 non-null     int64
+ 82  Losses_83  15 non-null     int64
+ 83  Losses_84  15 non-null     int64
+ 84  Losses_85  15 non-null     int64
+ 85  Losses_86  15 non-null     int64
+ 86  Losses_87  15 non-null     int64
+ 87  Losses_88  15 non-null     int64
+ 88  Losses_89  15 non-null     int64
+ 89  Losses_90  15 non-null     int64
+ 90  Losses_91  15 non-null     int64
+ 91  Losses_92  15 non-null     int64
+ 92  Losses_93  15 non-null     int64
+ 93  Losses_94  15 non-null     int64
+ 94  Losses_95  15 non-null     int64
+dtypes: int64(95)
+memory usage: 11.2+ KB
 None
 &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 Index: 504 entries, Subj_1 to Subj_504
@@ -926,112 +866,10 @@ dtypes: int64(100)
 memory usage: 397.7+ KB
 None
 &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Index: 504 entries, Subj_1 to Subj_504
-Data columns (total 100 columns):
- #   Column      Non-Null Count  Dtype
----  ------      --------------  -----
- 0   Losses_1    504 non-null    int64
- 1   Losses_2    504 non-null    int64
- 2   Losses_3    504 non-null    int64
- 3   Losses_4    504 non-null    int64
- 4   Losses_5    504 non-null    int64
- 5   Losses_6    504 non-null    int64
- 6   Losses_7    504 non-null    int64
- 7   Losses_8    504 non-null    int64
- 8   Losses_9    504 non-null    int64
- 9   Losses_10   504 non-null    int64
- 10  Losses_11   504 non-null    int64
- 11  Losses_12   504 non-null    int64
- 12  Losses_13   504 non-null    int64
- 13  Losses_14   504 non-null    int64
- 14  Losses_15   504 non-null    int64
- 15  Losses_16   504 non-null    int64
- 16  Losses_17   504 non-null    int64
- 17  Losses_18   504 non-null    int64
- 18  Losses_19   504 non-null    int64
- 19  Losses_20   504 non-null    int64
- 20  Losses_21   504 non-null    int64
- 21  Losses_22   504 non-null    int64
- 22  Losses_23   504 non-null    int64
- 23  Losses_24   504 non-null    int64
- 24  Losses_25   504 non-null    int64
- 25  Losses_26   504 non-null    int64
- 26  Losses_27   504 non-null    int64
- 27  Losses_28   504 non-null    int64
- 28  Losses_29   504 non-null    int64
- 29  Losses_30   504 non-null    int64
- 30  Losses_31   504 non-null    int64
- 31  Losses_32   504 non-null    int64
- 32  Losses_33   504 non-null    int64
- 33  Losses_34   504 non-null    int64
- 34  Losses_35   504 non-null    int64
- 35  Losses_36   504 non-null    int64
- 36  Losses_37   504 non-null    int64
- 37  Losses_38   504 non-null    int64
- 38  Losses_39   504 non-null    int64
- 39  Losses_40   504 non-null    int64
- 40  Losses_41   504 non-null    int64
- 41  Losses_42   504 non-null    int64
- 42  Losses_43   504 non-null    int64
- 43  Losses_44   504 non-null    int64
- 44  Losses_45   504 non-null    int64
- 45  Losses_46   504 non-null    int64
- 46  Losses_47   504 non-null    int64
- 47  Losses_48   504 non-null    int64
- 48  Losses_49   504 non-null    int64
- 49  Losses_50   504 non-null    int64
- 50  Losses_51   504 non-null    int64
- 51  Losses_52   504 non-null    int64
- 52  Losses_53   504 non-null    int64
- 53  Losses_54   504 non-null    int64
- 54  Losses_55   504 non-null    int64
- 55  Losses_56   504 non-null    int64
- 56  Losses_57   504 non-null    int64
- 57  Losses_58   504 non-null    int64
- 58  Losses_59   504 non-null    int64
- 59  Losses_60   504 non-null    int64
- 60  Losses_61   504 non-null    int64
- 61  Losses_62   504 non-null    int64
- 62  Losses_63   504 non-null    int64
- 63  Losses_64   504 non-null    int64
- 64  Losses_65   504 non-null    int64
- 65  Losses_66   504 non-null    int64
- 66  Losses_67   504 non-null    int64
- 67  Losses_68   504 non-null    int64
- 68  Losses_69   504 non-null    int64
- 69  Losses_70   504 non-null    int64
- 70  Losses_71   504 non-null    int64
- 71  Losses_72   504 non-null    int64
- 72  Losses_73   504 non-null    int64
- 73  Losses_74   504 non-null    int64
- 74  Losses_75   504 non-null    int64
- 75  Losses_76   504 non-null    int64
- 76  Losses_77   504 non-null    int64
- 77  Losses_78   504 non-null    int64
- 78  Losses_79   504 non-null    int64
- 79  Losses_80   504 non-null    int64
- 80  Losses_81   504 non-null    int64
- 81  Losses_82   504 non-null    int64
- 82  Losses_83   504 non-null    int64
- 83  Losses_84   504 non-null    int64
- 84  Losses_85   504 non-null    int64
- 85  Losses_86   504 non-null    int64
- 86  Losses_87   504 non-null    int64
- 87  Losses_88   504 non-null    int64
- 88  Losses_89   504 non-null    int64
- 89  Losses_90   504 non-null    int64
- 90  Losses_91   504 non-null    int64
- 91  Losses_92   504 non-null    int64
- 92  Losses_93   504 non-null    int64
- 93  Losses_94   504 non-null    int64
- 94  Losses_95   504 non-null    int64
- 95  Losses_96   504 non-null    int64
- 96  Losses_97   504 non-null    int64
- 97  Losses_98   504 non-null    int64
- 98  Losses_99   504 non-null    int64
- 99  Losses_100  504 non-null    int64
-dtypes: int64(100)
-memory usage: 397.7+ KB
+Index: 98 entries, Subj_1 to Subj_98
+Columns: 150 entries, Losses_1 to Losses_150
+dtypes: int64(150)
+memory usage: 115.6+ KB
 None
 </pre></div>
 </div>
@@ -1047,112 +885,107 @@ None
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Index: 504 entries, Subj_1 to Subj_504
-Data columns (total 100 columns):
- #   Column    Non-Null Count  Dtype
----  ------    --------------  -----
- 0   Wins_1    504 non-null    int64
- 1   Wins_2    504 non-null    int64
- 2   Wins_3    504 non-null    int64
- 3   Wins_4    504 non-null    int64
- 4   Wins_5    504 non-null    int64
- 5   Wins_6    504 non-null    int64
- 6   Wins_7    504 non-null    int64
- 7   Wins_8    504 non-null    int64
- 8   Wins_9    504 non-null    int64
- 9   Wins_10   504 non-null    int64
- 10  Wins_11   504 non-null    int64
- 11  Wins_12   504 non-null    int64
- 12  Wins_13   504 non-null    int64
- 13  Wins_14   504 non-null    int64
- 14  Wins_15   504 non-null    int64
- 15  Wins_16   504 non-null    int64
- 16  Wins_17   504 non-null    int64
- 17  Wins_18   504 non-null    int64
- 18  Wins_19   504 non-null    int64
- 19  Wins_20   504 non-null    int64
- 20  Wins_21   504 non-null    int64
- 21  Wins_22   504 non-null    int64
- 22  Wins_23   504 non-null    int64
- 23  Wins_24   504 non-null    int64
- 24  Wins_25   504 non-null    int64
- 25  Wins_26   504 non-null    int64
- 26  Wins_27   504 non-null    int64
- 27  Wins_28   504 non-null    int64
- 28  Wins_29   504 non-null    int64
- 29  Wins_30   504 non-null    int64
- 30  Wins_31   504 non-null    int64
- 31  Wins_32   504 non-null    int64
- 32  Wins_33   504 non-null    int64
- 33  Wins_34   504 non-null    int64
- 34  Wins_35   504 non-null    int64
- 35  Wins_36   504 non-null    int64
- 36  Wins_37   504 non-null    int64
- 37  Wins_38   504 non-null    int64
- 38  Wins_39   504 non-null    int64
- 39  Wins_40   504 non-null    int64
- 40  Wins_41   504 non-null    int64
- 41  Wins_42   504 non-null    int64
- 42  Wins_43   504 non-null    int64
- 43  Wins_44   504 non-null    int64
- 44  Wins_45   504 non-null    int64
- 45  Wins_46   504 non-null    int64
- 46  Wins_47   504 non-null    int64
- 47  Wins_48   504 non-null    int64
- 48  Wins_49   504 non-null    int64
- 49  Wins_50   504 non-null    int64
- 50  Wins_51   504 non-null    int64
- 51  Wins_52   504 non-null    int64
- 52  Wins_53   504 non-null    int64
- 53  Wins_54   504 non-null    int64
- 54  Wins_55   504 non-null    int64
- 55  Wins_56   504 non-null    int64
- 56  Wins_57   504 non-null    int64
- 57  Wins_58   504 non-null    int64
- 58  Wins_59   504 non-null    int64
- 59  Wins_60   504 non-null    int64
- 60  Wins_61   504 non-null    int64
- 61  Wins_62   504 non-null    int64
- 62  Wins_63   504 non-null    int64
- 63  Wins_64   504 non-null    int64
- 64  Wins_65   504 non-null    int64
- 65  Wins_66   504 non-null    int64
- 66  Wins_67   504 non-null    int64
- 67  Wins_68   504 non-null    int64
- 68  Wins_69   504 non-null    int64
- 69  Wins_70   504 non-null    int64
- 70  Wins_71   504 non-null    int64
- 71  Wins_72   504 non-null    int64
- 72  Wins_73   504 non-null    int64
- 73  Wins_74   504 non-null    int64
- 74  Wins_75   504 non-null    int64
- 75  Wins_76   504 non-null    int64
- 76  Wins_77   504 non-null    int64
- 77  Wins_78   504 non-null    int64
- 78  Wins_79   504 non-null    int64
- 79  Wins_80   504 non-null    int64
- 80  Wins_81   504 non-null    int64
- 81  Wins_82   504 non-null    int64
- 82  Wins_83   504 non-null    int64
- 83  Wins_84   504 non-null    int64
- 84  Wins_85   504 non-null    int64
- 85  Wins_86   504 non-null    int64
- 86  Wins_87   504 non-null    int64
- 87  Wins_88   504 non-null    int64
- 88  Wins_89   504 non-null    int64
- 89  Wins_90   504 non-null    int64
- 90  Wins_91   504 non-null    int64
- 91  Wins_92   504 non-null    int64
- 92  Wins_93   504 non-null    int64
- 93  Wins_94   504 non-null    int64
- 94  Wins_95   504 non-null    int64
- 95  Wins_96   504 non-null    int64
- 96  Wins_97   504 non-null    int64
- 97  Wins_98   504 non-null    int64
- 98  Wins_99   504 non-null    int64
- 99  Wins_100  504 non-null    int64
-dtypes: int64(100)
-memory usage: 397.7+ KB
+Index: 15 entries, Subj_1 to Subj_15
+Data columns (total 95 columns):
+ #   Column   Non-Null Count  Dtype
+---  ------   --------------  -----
+ 0   Wins_1   15 non-null     int64
+ 1   Wins_2   15 non-null     int64
+ 2   Wins_3   15 non-null     int64
+ 3   Wins_4   15 non-null     int64
+ 4   Wins_5   15 non-null     int64
+ 5   Wins_6   15 non-null     int64
+ 6   Wins_7   15 non-null     int64
+ 7   Wins_8   15 non-null     int64
+ 8   Wins_9   15 non-null     int64
+ 9   Wins_10  15 non-null     int64
+ 10  Wins_11  15 non-null     int64
+ 11  Wins_12  15 non-null     int64
+ 12  Wins_13  15 non-null     int64
+ 13  Wins_14  15 non-null     int64
+ 14  Wins_15  15 non-null     int64
+ 15  Wins_16  15 non-null     int64
+ 16  Wins_17  15 non-null     int64
+ 17  Wins_18  15 non-null     int64
+ 18  Wins_19  15 non-null     int64
+ 19  Wins_20  15 non-null     int64
+ 20  Wins_21  15 non-null     int64
+ 21  Wins_22  15 non-null     int64
+ 22  Wins_23  15 non-null     int64
+ 23  Wins_24  15 non-null     int64
+ 24  Wins_25  15 non-null     int64
+ 25  Wins_26  15 non-null     int64
+ 26  Wins_27  15 non-null     int64
+ 27  Wins_28  15 non-null     int64
+ 28  Wins_29  15 non-null     int64
+ 29  Wins_30  15 non-null     int64
+ 30  Wins_31  15 non-null     int64
+ 31  Wins_32  15 non-null     int64
+ 32  Wins_33  15 non-null     int64
+ 33  Wins_34  15 non-null     int64
+ 34  Wins_35  15 non-null     int64
+ 35  Wins_36  15 non-null     int64
+ 36  Wins_37  15 non-null     int64
+ 37  Wins_38  15 non-null     int64
+ 38  Wins_39  15 non-null     int64
+ 39  Wins_40  15 non-null     int64
+ 40  Wins_41  15 non-null     int64
+ 41  Wins_42  15 non-null     int64
+ 42  Wins_43  15 non-null     int64
+ 43  Wins_44  15 non-null     int64
+ 44  Wins_45  15 non-null     int64
+ 45  Wins_46  15 non-null     int64
+ 46  Wins_47  15 non-null     int64
+ 47  Wins_48  15 non-null     int64
+ 48  Wins_49  15 non-null     int64
+ 49  Wins_50  15 non-null     int64
+ 50  Wins_51  15 non-null     int64
+ 51  Wins_52  15 non-null     int64
+ 52  Wins_53  15 non-null     int64
+ 53  Wins_54  15 non-null     int64
+ 54  Wins_55  15 non-null     int64
+ 55  Wins_56  15 non-null     int64
+ 56  Wins_57  15 non-null     int64
+ 57  Wins_58  15 non-null     int64
+ 58  Wins_59  15 non-null     int64
+ 59  Wins_60  15 non-null     int64
+ 60  Wins_61  15 non-null     int64
+ 61  Wins_62  15 non-null     int64
+ 62  Wins_63  15 non-null     int64
+ 63  Wins_64  15 non-null     int64
+ 64  Wins_65  15 non-null     int64
+ 65  Wins_66  15 non-null     int64
+ 66  Wins_67  15 non-null     int64
+ 67  Wins_68  15 non-null     int64
+ 68  Wins_69  15 non-null     int64
+ 69  Wins_70  15 non-null     int64
+ 70  Wins_71  15 non-null     int64
+ 71  Wins_72  15 non-null     int64
+ 72  Wins_73  15 non-null     int64
+ 73  Wins_74  15 non-null     int64
+ 74  Wins_75  15 non-null     int64
+ 75  Wins_76  15 non-null     int64
+ 76  Wins_77  15 non-null     int64
+ 77  Wins_78  15 non-null     int64
+ 78  Wins_79  15 non-null     int64
+ 79  Wins_80  15 non-null     int64
+ 80  Wins_81  15 non-null     int64
+ 81  Wins_82  15 non-null     int64
+ 82  Wins_83  15 non-null     int64
+ 83  Wins_84  15 non-null     int64
+ 84  Wins_85  15 non-null     int64
+ 85  Wins_86  15 non-null     int64
+ 86  Wins_87  15 non-null     int64
+ 87  Wins_88  15 non-null     int64
+ 88  Wins_89  15 non-null     int64
+ 89  Wins_90  15 non-null     int64
+ 90  Wins_91  15 non-null     int64
+ 91  Wins_92  15 non-null     int64
+ 92  Wins_93  15 non-null     int64
+ 93  Wins_94  15 non-null     int64
+ 94  Wins_95  15 non-null     int64
+dtypes: int64(95)
+memory usage: 11.2+ KB
 None
 &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 Index: 504 entries, Subj_1 to Subj_504
@@ -1263,112 +1096,10 @@ dtypes: int64(100)
 memory usage: 397.7+ KB
 None
 &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-Index: 504 entries, Subj_1 to Subj_504
-Data columns (total 100 columns):
- #   Column    Non-Null Count  Dtype
----  ------    --------------  -----
- 0   Wins_1    504 non-null    int64
- 1   Wins_2    504 non-null    int64
- 2   Wins_3    504 non-null    int64
- 3   Wins_4    504 non-null    int64
- 4   Wins_5    504 non-null    int64
- 5   Wins_6    504 non-null    int64
- 6   Wins_7    504 non-null    int64
- 7   Wins_8    504 non-null    int64
- 8   Wins_9    504 non-null    int64
- 9   Wins_10   504 non-null    int64
- 10  Wins_11   504 non-null    int64
- 11  Wins_12   504 non-null    int64
- 12  Wins_13   504 non-null    int64
- 13  Wins_14   504 non-null    int64
- 14  Wins_15   504 non-null    int64
- 15  Wins_16   504 non-null    int64
- 16  Wins_17   504 non-null    int64
- 17  Wins_18   504 non-null    int64
- 18  Wins_19   504 non-null    int64
- 19  Wins_20   504 non-null    int64
- 20  Wins_21   504 non-null    int64
- 21  Wins_22   504 non-null    int64
- 22  Wins_23   504 non-null    int64
- 23  Wins_24   504 non-null    int64
- 24  Wins_25   504 non-null    int64
- 25  Wins_26   504 non-null    int64
- 26  Wins_27   504 non-null    int64
- 27  Wins_28   504 non-null    int64
- 28  Wins_29   504 non-null    int64
- 29  Wins_30   504 non-null    int64
- 30  Wins_31   504 non-null    int64
- 31  Wins_32   504 non-null    int64
- 32  Wins_33   504 non-null    int64
- 33  Wins_34   504 non-null    int64
- 34  Wins_35   504 non-null    int64
- 35  Wins_36   504 non-null    int64
- 36  Wins_37   504 non-null    int64
- 37  Wins_38   504 non-null    int64
- 38  Wins_39   504 non-null    int64
- 39  Wins_40   504 non-null    int64
- 40  Wins_41   504 non-null    int64
- 41  Wins_42   504 non-null    int64
- 42  Wins_43   504 non-null    int64
- 43  Wins_44   504 non-null    int64
- 44  Wins_45   504 non-null    int64
- 45  Wins_46   504 non-null    int64
- 46  Wins_47   504 non-null    int64
- 47  Wins_48   504 non-null    int64
- 48  Wins_49   504 non-null    int64
- 49  Wins_50   504 non-null    int64
- 50  Wins_51   504 non-null    int64
- 51  Wins_52   504 non-null    int64
- 52  Wins_53   504 non-null    int64
- 53  Wins_54   504 non-null    int64
- 54  Wins_55   504 non-null    int64
- 55  Wins_56   504 non-null    int64
- 56  Wins_57   504 non-null    int64
- 57  Wins_58   504 non-null    int64
- 58  Wins_59   504 non-null    int64
- 59  Wins_60   504 non-null    int64
- 60  Wins_61   504 non-null    int64
- 61  Wins_62   504 non-null    int64
- 62  Wins_63   504 non-null    int64
- 63  Wins_64   504 non-null    int64
- 64  Wins_65   504 non-null    int64
- 65  Wins_66   504 non-null    int64
- 66  Wins_67   504 non-null    int64
- 67  Wins_68   504 non-null    int64
- 68  Wins_69   504 non-null    int64
- 69  Wins_70   504 non-null    int64
- 70  Wins_71   504 non-null    int64
- 71  Wins_72   504 non-null    int64
- 72  Wins_73   504 non-null    int64
- 73  Wins_74   504 non-null    int64
- 74  Wins_75   504 non-null    int64
- 75  Wins_76   504 non-null    int64
- 76  Wins_77   504 non-null    int64
- 77  Wins_78   504 non-null    int64
- 78  Wins_79   504 non-null    int64
- 79  Wins_80   504 non-null    int64
- 80  Wins_81   504 non-null    int64
- 81  Wins_82   504 non-null    int64
- 82  Wins_83   504 non-null    int64
- 83  Wins_84   504 non-null    int64
- 84  Wins_85   504 non-null    int64
- 85  Wins_86   504 non-null    int64
- 86  Wins_87   504 non-null    int64
- 87  Wins_88   504 non-null    int64
- 88  Wins_89   504 non-null    int64
- 89  Wins_90   504 non-null    int64
- 90  Wins_91   504 non-null    int64
- 91  Wins_92   504 non-null    int64
- 92  Wins_93   504 non-null    int64
- 93  Wins_94   504 non-null    int64
- 94  Wins_95   504 non-null    int64
- 95  Wins_96   504 non-null    int64
- 96  Wins_97   504 non-null    int64
- 97  Wins_98   504 non-null    int64
- 98  Wins_99   504 non-null    int64
- 99  Wins_100  504 non-null    int64
-dtypes: int64(100)
-memory usage: 397.7+ KB
+Index: 98 entries, Subj_1 to Subj_98
+Columns: 150 entries, Wins_1 to Wins_150
+dtypes: int64(150)
+memory usage: 115.6+ KB
 None
 </pre></div>
 </div>
@@ -1379,9 +1110,23 @@ None
 <div class="section" id="part-2">
 <h1>Part 2<a class="headerlink" href="#part-2" title="Permalink to this headline">¶</a></h1>
 <p>Now I will merge the datasets to include choice, amount won/lost and index.</p>
+<p>I begin by changing the column names in the wins and losses datasets to ‘Total_{n}’. This made the merging of the two dataframes easier because I was then able to use</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">add</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>to get the total amount won or loss for each choice.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">choice_100</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">index_100</span><span class="p">,</span> <span class="n">on</span> <span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ld</span><span class="p">,</span> <span class="n">wd</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">96</span><span class="p">):</span>
+    <span class="n">ld</span><span class="p">[</span><span class="s1">&#39;Losses_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="s1">&#39;Total_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">wd</span><span class="p">[</span><span class="s1">&#39;Wins_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="s1">&#39;Total_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    
+<span class="n">lo_95</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">ld</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wi_95</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">wd</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">total_95</span> <span class="o">=</span> <span class="n">wi_95</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">lo_95</span><span class="p">)</span>
+<span class="n">total_95</span>
 </pre></div>
 </div>
 </div>
@@ -1404,69 +1149,1667 @@ None
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Subj</th>
+      <th>Total_1</th>
+      <th>Total_2</th>
+      <th>Total_3</th>
+      <th>Total_4</th>
+      <th>Total_5</th>
+      <th>Total_6</th>
+      <th>Total_7</th>
+      <th>Total_8</th>
+      <th>Total_9</th>
+      <th>Total_10</th>
+      <th>...</th>
+      <th>Total_86</th>
+      <th>Total_87</th>
+      <th>Total_88</th>
+      <th>Total_89</th>
+      <th>Total_90</th>
+      <th>Total_91</th>
+      <th>Total_92</th>
+      <th>Total_93</th>
+      <th>Total_94</th>
+      <th>Total_95</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Subj_1</th>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>-1150</td>
+      <td>100</td>
+      <td>...</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>-200</td>
+      <td>50</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Subj_2</th>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>...</td>
+      <td>0</td>
+      <td>-200</td>
+      <td>100</td>
+      <td>-250</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>Subj_3</th>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>-50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>...</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>-200</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Subj_4</th>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>-50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>...</td>
+      <td>100</td>
+      <td>0</td>
+      <td>50</td>
+      <td>0</td>
+      <td>0</td>
+      <td>50</td>
+      <td>25</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Subj_5</th>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>-50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>...</td>
+      <td>-25</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Subj_6</th>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>-50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>...</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>0</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>-200</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Subj_7</th>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>-50</td>
+      <td>...</td>
+      <td>50</td>
+      <td>50</td>
+      <td>-50</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>-200</td>
+      <td>50</td>
+      <td>100</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Subj_8</th>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>-50</td>
+      <td>100</td>
+      <td>...</td>
+      <td>50</td>
+      <td>100</td>
+      <td>0</td>
+      <td>50</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Subj_9</th>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>-50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>...</td>
+      <td>50</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>-1150</td>
+      <td>50</td>
+      <td>100</td>
+      <td>50</td>
+      <td>25</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>Subj_10</th>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>...</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>-200</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>Subj_11</th>
+      <td>50</td>
+      <td>50</td>
+      <td>0</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>-50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>...</td>
+      <td>-200</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>-150</td>
+    </tr>
+    <tr>
+      <th>Subj_12</th>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>...</td>
+      <td>-200</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>25</td>
+      <td>50</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <th>Subj_13</th>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>-50</td>
+      <td>50</td>
+      <td>...</td>
+      <td>100</td>
+      <td>-25</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+    </tr>
+    <tr>
+      <th>Subj_14</th>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>-50</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>...</td>
+      <td>50</td>
+      <td>100</td>
+      <td>50</td>
+      <td>100</td>
+      <td>-150</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>Subj_15</th>
+      <td>100</td>
+      <td>100</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>100</td>
+      <td>0</td>
+      <td>...</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>100</td>
+      <td>-150</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+      <td>50</td>
+    </tr>
+  </tbody>
+</table>
+<p>15 rows × 95 columns</p>
+</div></div></div>
+</div>
+<p>I then joined all_95 with choice_95 so that the all_95 now contains the total amount won or lost and the choice that was made for each round.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_95</span> <span class="o">=</span> <span class="n">total_95</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">choice_95</span><span class="p">)</span>
+
+<span class="n">cols</span> <span class="o">=</span> <span class="n">all_95</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">all_95</span> <span class="o">=</span> <span class="n">all_95</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+<span class="n">all_95</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Total_1</th>
+      <th>Choice_1</th>
+      <th>Total_2</th>
+      <th>Choice_2</th>
+      <th>Total_3</th>
+      <th>Choice_3</th>
+      <th>Total_4</th>
+      <th>Choice_4</th>
+      <th>Total_5</th>
+      <th>Choice_5</th>
+      <th>...</th>
+      <th>Total_91</th>
+      <th>Choice_91</th>
+      <th>Total_92</th>
+      <th>Choice_92</th>
+      <th>Total_93</th>
+      <th>Choice_93</th>
+      <th>Total_94</th>
+      <th>Choice_94</th>
+      <th>Total_95</th>
+      <th>Choice_95</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Subj_1</th>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>-200</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Subj_2</th>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>3</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>...</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>25</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Subj_3</th>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>3</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>-200</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Subj_4</th>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>3</td>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>1</td>
+      <td>-50</td>
+      <td>1</td>
+      <td>...</td>
+      <td>50</td>
+      <td>3</td>
+      <td>25</td>
+      <td>3</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Subj_5</th>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>3</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Subj_6</th>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>-50</td>
+      <td>1</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>-200</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Subj_7</th>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>-200</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Subj_8</th>
+      <td>50</td>
+      <td>4</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>1</td>
+      <td>50</td>
+      <td>3</td>
+      <td>100</td>
+      <td>2</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Subj_9</th>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>3</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>4</td>
+      <td>25</td>
+      <td>3</td>
+      <td>100</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Subj_10</th>
+      <td>50</td>
+      <td>4</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>1</td>
+      <td>50</td>
+      <td>3</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>-200</td>
+      <td>4</td>
+      <td>25</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Subj_11</th>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>3</td>
+      <td>0</td>
+      <td>3</td>
+      <td>100</td>
+      <td>1</td>
+      <td>50</td>
+      <td>4</td>
+      <td>...</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>4</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>-150</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Subj_12</th>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>100</td>
+      <td>2</td>
+      <td>...</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>25</td>
+      <td>3</td>
+      <td>50</td>
+      <td>4</td>
+      <td>100</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Subj_13</th>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>1</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>4</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>2</td>
+      <td>100</td>
+      <td>1</td>
+      <td>50</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>Subj_14</th>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>4</td>
+      <td>100</td>
+      <td>1</td>
+      <td>...</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>3</td>
+      <td>25</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Subj_15</th>
+      <td>100</td>
+      <td>1</td>
+      <td>100</td>
+      <td>2</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>...</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>4</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>3</td>
+      <td>50</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>15 rows × 190 columns</p>
+</div></div></div>
+</div>
+<p>I then changed the cells in index_95 to be in the form ‘Subj_{}’ and set that column as the index and joined it with all_95.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">index_95</span><span class="p">[</span><span class="s1">&#39;Subj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">index_95</span><span class="p">[</span><span class="s1">&#39;Subj&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;Subj_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">index_95</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Subj&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">index_95</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">all_95</span> <span class="o">=</span> <span class="n">all_95</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">index_95</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, I changed the order of the columns in the dataframe so that it was more easily readable and I could understand it more. I made it to go in alternating order of total won/lost and choice made, and then the study name is the final column. I also added multilevel columns to make each trial separate. I then exported the file in csv format to the data folder in my book.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">96</span><span class="p">):</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Total_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)])</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Choice_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)])</span>
+<span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Study&#39;</span><span class="p">])</span>
+<span class="n">all_95</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="n">all_95</span><span class="o">.</span><span class="n">to_csv</span><span class="p">((</span><span class="s2">&quot;./data/all_95.csv&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">all_95</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>             1                2                3                4           \
+       Total_1 Choice_1 Total_2 Choice_2 Total_3 Choice_3 Total_4 Choice_4   
+Subj_1     100        2     100        2     100        2     100        2   
+Subj_2     100        1     100        2      50        3     100        2   
+Subj_3      50        3      50        4      50        3     100        2   
+Subj_4      50        4      50        3     100        1     100        1   
+Subj_5     100        1     100        2      50        3      50        4   
+
+             5           ...        91       92                 93            \
+       Total_5 Choice_5  ... Choice_91 Total_92 Choice_92 Total_93 Choice_93   
+Subj_1     100        2  ...         4       50         4     -200         4   
+Subj_2     100        2  ...         2       50         3       50         4   
+Subj_3     100        2  ...         4     -200         4       50         4   
+Subj_4     -50        1  ...         3       25         3       50         4   
+Subj_5      50        3  ...         4       50         4       50         4   
+
+             94                 95                Name  
+       Total_94 Choice_94 Total_95 Choice_95     Study  
+Subj_1       50         4       50         4  Fridberg  
+Subj_2       50         4       25         3  Fridberg  
+Subj_3       50         4       50         4  Fridberg  
+Subj_4       50         4       50         4  Fridberg  
+Subj_5       50         4       50         4  Fridberg  
+
+[5 rows x 191 columns]
+</pre></div>
+</div>
+</div>
+</div>
+<p>I will now continue to do this for the two other dataframe amounts; 100 and 150.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ld</span><span class="p">,</span> <span class="n">wd</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">):</span>
+    <span class="n">ld</span><span class="p">[</span><span class="s1">&#39;Losses_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="s1">&#39;Total_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">wd</span><span class="p">[</span><span class="s1">&#39;Wins_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="s1">&#39;Total_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    
+<span class="n">lo_100</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">ld</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wi_100</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">wd</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">total_100</span> <span class="o">=</span> <span class="n">wi_100</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">lo_100</span><span class="p">)</span>
+
+<span class="n">all_100</span> <span class="o">=</span> <span class="n">total_100</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">choice_100</span><span class="p">)</span>
+
+<span class="n">cols</span> <span class="o">=</span> <span class="n">all_100</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">all_100</span> <span class="o">=</span> <span class="n">all_100</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+
+<span class="n">index_100</span><span class="p">[</span><span class="s1">&#39;Subj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">index_100</span><span class="p">[</span><span class="s1">&#39;Subj&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;Subj_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">index_100</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Subj&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">index_100</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">all_100</span> <span class="o">=</span> <span class="n">all_100</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">index_100</span><span class="p">)</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">):</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Total_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)])</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Choice_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)])</span>
+<span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Study&#39;</span><span class="p">])</span>
+<span class="n">all_100</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="n">all_100</span><span class="o">.</span><span class="n">to_csv</span><span class="p">((</span><span class="s2">&quot;./data/all_100.csv&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">all_100</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>             1                2                3                4           \
+       Total_1 Choice_1 Total_2 Choice_2 Total_3 Choice_3 Total_4 Choice_4   
+Subj_1    -100        1     -50        1     100        2    -200        4   
+Subj_2     100        2     100        1      50        4      50        4   
+Subj_3      50        4     100        2       0        3    -200        1   
+Subj_4    -200        4       0        3      50        4     100        2   
+Subj_5     100        1     100        2     100        2   -1150        2   
+
+             5           ...        96       97                 98            \
+       Total_5 Choice_5  ... Choice_96 Total_97 Choice_97 Total_98 Choice_98   
+Subj_1      50        3  ...         2       50         4      100         2   
+Subj_2      50        3  ...         4       50         4      100         2   
+Subj_3      50        4  ...         2      100         2       50         4   
+Subj_4    -100        1  ...         4      100         1       50         4   
+Subj_5     100        2  ...         3       50         3        0         3   
+
+             99                 100                  Name  
+       Total_99 Choice_99 Total_100 Choice_100      Study  
+Subj_1       50         4     -1150          2  Horstmann  
+Subj_2      100         2        50          4  Horstmann  
+Subj_3      100         2       100          2  Horstmann  
+Subj_4        0         3        50          4  Horstmann  
+Subj_5       50         4        50          4  Horstmann  
+
+[5 rows x 201 columns]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ld</span><span class="p">,</span> <span class="n">wd</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">151</span><span class="p">):</span>
+    <span class="n">ld</span><span class="p">[</span><span class="s1">&#39;Losses_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="s1">&#39;Total_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">wd</span><span class="p">[</span><span class="s1">&#39;Wins_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="s1">&#39;Total_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    
+<span class="n">lo_150</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">ld</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">wi_150</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">wd</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">total_150</span> <span class="o">=</span> <span class="n">wi_150</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">lo_150</span><span class="p">)</span>
+
+<span class="n">all_150</span> <span class="o">=</span> <span class="n">total_150</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">choice_150</span><span class="p">)</span>
+
+<span class="n">cols</span> <span class="o">=</span> <span class="n">all_150</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">all_150</span> <span class="o">=</span> <span class="n">all_150</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span>
+
+<span class="n">index_150</span><span class="p">[</span><span class="s1">&#39;Subj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">index_150</span><span class="p">[</span><span class="s1">&#39;Subj&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;Subj_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">index_150</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Subj&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">index_150</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">all_150</span> <span class="o">=</span> <span class="n">all_150</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">index_150</span><span class="p">)</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">151</span><span class="p">):</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Total_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)])</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;Choice_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)])</span>
+<span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Study&#39;</span><span class="p">])</span>
+<span class="n">all_150</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="n">all_150</span><span class="o">.</span><span class="n">to_csv</span><span class="p">((</span><span class="s2">&quot;./data/all_150.csv&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">all_150</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>             1                2                3                4           \
+       Total_1 Choice_1 Total_2 Choice_2 Total_3 Choice_3 Total_4 Choice_4   
+Subj_1    -200        4     100        1    -250        1     100        1   
+Subj_2    -150        1    -250        1      50        4      50        4   
+Subj_3     100        2      50        4     100        1      50        3   
+Subj_4      50        4      50        4      50        4      50        4   
+Subj_5      50        4      50        4      50        4      50        4   
+
+             5           ...        146       147                  148  \
+       Total_5 Choice_5  ... Choice_146 Total_147 Choice_147 Total_148   
+Subj_1      50        3  ...          1         0          3       100   
+Subj_2      50        4  ...          4      -200          1        50   
+Subj_3     -50        1  ...          4        50          4        50   
+Subj_4     -50        1  ...          4        50          4        50   
+Subj_5      50        4  ...          4        50          4        50   
+
+                        149                  150                         Name  
+       Choice_148 Total_149 Choice_149 Total_150 Choice_150             Study  
+Subj_1          2        50          4       -50          1  Steingroever2011  
+Subj_2          4         0          3       100          1  Steingroever2011  
+Subj_3          4        50          4        50          4  Steingroever2011  
+Subj_4          4        50          4        50          4  Steingroever2011  
+Subj_5          4        50          4      -200          4  Steingroever2011  
+
+[5 rows x 301 columns]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="part-3">
+<h1>Part 3<a class="headerlink" href="#part-3" title="Permalink to this headline">¶</a></h1>
+<p>Now I will aggregate the ‘all’ dataframes to and normalise them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">all_95</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">total</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">a</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">b</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">+=</span> <span class="mi">1</span>
+                
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">total</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">agg_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;Study&#39;</span><span class="p">])</span>
+<span class="n">agg_95</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Total</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
       <th>Study</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>200</th>
-      <td>201</td>
-      <td>Maia</td>
+      <th>0</th>
+      <td>1150</td>
+      <td>12</td>
+      <td>9</td>
+      <td>3</td>
+      <td>71</td>
+      <td>Fridberg</td>
     </tr>
     <tr>
-      <th>201</th>
-      <td>202</td>
-      <td>Maia</td>
+      <th>1</th>
+      <td>-675</td>
+      <td>24</td>
+      <td>26</td>
+      <td>12</td>
+      <td>33</td>
+      <td>Fridberg</td>
     </tr>
     <tr>
-      <th>202</th>
-      <td>203</td>
-      <td>Maia</td>
+      <th>2</th>
+      <td>-750</td>
+      <td>12</td>
+      <td>35</td>
+      <td>10</td>
+      <td>38</td>
+      <td>Fridberg</td>
     </tr>
     <tr>
-      <th>203</th>
-      <td>204</td>
-      <td>Maia</td>
+      <th>3</th>
+      <td>-525</td>
+      <td>11</td>
+      <td>34</td>
+      <td>12</td>
+      <td>38</td>
+      <td>Fridberg</td>
     </tr>
     <tr>
-      <th>204</th>
-      <td>205</td>
-      <td>Maia</td>
+      <th>4</th>
+      <td>100</td>
+      <td>10</td>
+      <td>24</td>
+      <td>15</td>
+      <td>46</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1250</td>
+      <td>6</td>
+      <td>18</td>
+      <td>20</td>
+      <td>51</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>-150</td>
+      <td>19</td>
+      <td>31</td>
+      <td>8</td>
+      <td>37</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>150</td>
+      <td>12</td>
+      <td>28</td>
+      <td>10</td>
+      <td>45</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>-575</td>
+      <td>10</td>
+      <td>34</td>
+      <td>12</td>
+      <td>39</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1475</td>
+      <td>3</td>
+      <td>20</td>
+      <td>12</td>
+      <td>60</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>-350</td>
+      <td>14</td>
+      <td>40</td>
+      <td>9</td>
+      <td>32</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>-325</td>
+      <td>15</td>
+      <td>42</td>
+      <td>17</td>
+      <td>21</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>450</td>
+      <td>11</td>
+      <td>30</td>
+      <td>14</td>
+      <td>40</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>-425</td>
+      <td>14</td>
+      <td>37</td>
+      <td>17</td>
+      <td>27</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>450</td>
+      <td>14</td>
+      <td>17</td>
+      <td>23</td>
+      <td>41</td>
+      <td>Fridberg</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">all_100</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">total</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">a</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">b</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">+=</span> <span class="mi">1</span>
+                
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">total</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">agg_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;Study&#39;</span><span class="p">])</span>
+<span class="n">agg_100</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Total</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>Study</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1800</td>
+      <td>21</td>
+      <td>42</td>
+      <td>15</td>
+      <td>22</td>
+      <td>Horstmann</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-800</td>
+      <td>14</td>
+      <td>35</td>
+      <td>18</td>
+      <td>33</td>
+      <td>Horstmann</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-450</td>
+      <td>21</td>
+      <td>42</td>
+      <td>7</td>
+      <td>30</td>
+      <td>Horstmann</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1200</td>
+      <td>13</td>
+      <td>24</td>
+      <td>28</td>
+      <td>35</td>
+      <td>Horstmann</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-1300</td>
+      <td>15</td>
+      <td>31</td>
+      <td>28</td>
+      <td>26</td>
+      <td>Horstmann</td>
     </tr>
     <tr>
       <th>...</th>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>500</td>
+      <td>75</td>
+      <td>17</td>
+      <td>29</td>
+      <td>28</td>
+      <td>26</td>
       <td>Worthy</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>501</td>
+      <td>600</td>
+      <td>14</td>
+      <td>15</td>
+      <td>44</td>
+      <td>27</td>
       <td>Worthy</td>
     </tr>
     <tr>
       <th>501</th>
-      <td>502</td>
+      <td>-1525</td>
+      <td>27</td>
+      <td>32</td>
+      <td>17</td>
+      <td>24</td>
       <td>Worthy</td>
     </tr>
     <tr>
       <th>502</th>
-      <td>503</td>
+      <td>-750</td>
+      <td>27</td>
+      <td>25</td>
+      <td>23</td>
+      <td>25</td>
       <td>Worthy</td>
     </tr>
     <tr>
       <th>503</th>
-      <td>504</td>
+      <td>175</td>
+      <td>10</td>
+      <td>24</td>
+      <td>12</td>
+      <td>54</td>
       <td>Worthy</td>
     </tr>
   </tbody>
 </table>
-<p>304 rows × 2 columns</p>
+<p>504 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">all_150</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">total</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">a</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">b</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">+=</span> <span class="mi">1</span>
+                
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">total</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">agg_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;Study&#39;</span><span class="p">])</span>
+<span class="n">agg_150</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Total</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>Study</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-550</td>
+      <td>46</td>
+      <td>37</td>
+      <td>29</td>
+      <td>38</td>
+      <td>Steingroever2011</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1600</td>
+      <td>40</td>
+      <td>57</td>
+      <td>19</td>
+      <td>34</td>
+      <td>Steingroever2011</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>900</td>
+      <td>19</td>
+      <td>35</td>
+      <td>8</td>
+      <td>88</td>
+      <td>Steingroever2011</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2200</td>
+      <td>18</td>
+      <td>11</td>
+      <td>10</td>
+      <td>111</td>
+      <td>Steingroever2011</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1900</td>
+      <td>13</td>
+      <td>1</td>
+      <td>1</td>
+      <td>135</td>
+      <td>Steingroever2011</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>300</td>
+      <td>24</td>
+      <td>69</td>
+      <td>13</td>
+      <td>44</td>
+      <td>Wetzels</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>2150</td>
+      <td>5</td>
+      <td>31</td>
+      <td>46</td>
+      <td>68</td>
+      <td>Wetzels</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>1450</td>
+      <td>18</td>
+      <td>19</td>
+      <td>37</td>
+      <td>76</td>
+      <td>Wetzels</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>1200</td>
+      <td>25</td>
+      <td>30</td>
+      <td>44</td>
+      <td>51</td>
+      <td>Wetzels</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>-1800</td>
+      <td>11</td>
+      <td>104</td>
+      <td>6</td>
+      <td>29</td>
+      <td>Wetzels</td>
+    </tr>
+  </tbody>
+</table>
+<p>98 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_150</span><span class="p">[[</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">]]</span><span class="o">/=</span> <span class="mi">150</span>
+<span class="n">agg_100</span><span class="p">[[</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">]]</span><span class="o">/=</span> <span class="mi">150</span>
+<span class="n">agg_95</span><span class="p">[[</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">]]</span><span class="o">/=</span> <span class="mi">150</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">agg_95</span><span class="p">,</span> <span class="n">agg_100</span><span class="p">,</span> <span class="n">agg_150</span><span class="p">])</span>
+<span class="n">agg_all</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">agg_all</span><span class="o">.</span><span class="n">to_csv</span><span class="p">((</span><span class="s2">&quot;./data/agg_all.csv&quot;</span><span class="p">))</span>
+<span class="n">agg_all</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Total</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>Study</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.666667</td>
+      <td>0.080000</td>
+      <td>0.060000</td>
+      <td>0.020000</td>
+      <td>0.473333</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-4.500000</td>
+      <td>0.160000</td>
+      <td>0.173333</td>
+      <td>0.080000</td>
+      <td>0.220000</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-5.000000</td>
+      <td>0.080000</td>
+      <td>0.233333</td>
+      <td>0.066667</td>
+      <td>0.253333</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-3.500000</td>
+      <td>0.073333</td>
+      <td>0.226667</td>
+      <td>0.080000</td>
+      <td>0.253333</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.666667</td>
+      <td>0.066667</td>
+      <td>0.160000</td>
+      <td>0.100000</td>
+      <td>0.306667</td>
+      <td>Fridberg</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>2.000000</td>
+      <td>0.160000</td>
+      <td>0.460000</td>
+      <td>0.086667</td>
+      <td>0.293333</td>
+      <td>Wetzels</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>14.333333</td>
+      <td>0.033333</td>
+      <td>0.206667</td>
+      <td>0.306667</td>
+      <td>0.453333</td>
+      <td>Wetzels</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>9.666667</td>
+      <td>0.120000</td>
+      <td>0.126667</td>
+      <td>0.246667</td>
+      <td>0.506667</td>
+      <td>Wetzels</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>8.000000</td>
+      <td>0.166667</td>
+      <td>0.200000</td>
+      <td>0.293333</td>
+      <td>0.340000</td>
+      <td>Wetzels</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>-12.000000</td>
+      <td>0.073333</td>
+      <td>0.693333</td>
+      <td>0.040000</td>
+      <td>0.193333</td>
+      <td>Wetzels</td>
+    </tr>
+  </tbody>
+</table>
+<p>617 rows × 6 columns</p>
 </div></div></div>
 </div>
 </div>
@@ -1500,6 +2843,24 @@ None
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="intro.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Iowa Gambling Task</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="clustering.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Cluster Analysis</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         
@@ -1509,7 +2870,7 @@ None
     <div class="container">
       <p>
         
-          By The Jupyter Book Community<br/>
+          By Cliodhna McAuley<br/>
         
             &copy; Copyright 2021.<br/>
       </p>

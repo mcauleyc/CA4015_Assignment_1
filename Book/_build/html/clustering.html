@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; My sample book</title>
+    <title>Cluster Analysis &#8212; Clustering Analysis of Iowa Gambling Task</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,6 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Data Processing" href="data-processing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -73,10 +74,10 @@
         
       
       
-      <img src="_static/logo.png" class="logo" alt="logo">
+      <img src="_static/DCU-logo.jpg" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">My sample book</h1>
+      <h1 class="site-logo" id="site-title">Clustering Analysis of Iowa Gambling Task</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -87,19 +88,19 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Welcome to your Jupyter Book
+   Iowa Gambling Task
   </a>
  </li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="markdown.html">
-   Markdown Files
+  <a class="reference internal" href="data-processing.html">
+   Data Processing
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="notebooks.html">
-   Content with notebooks
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Cluster Analysis
   </a>
  </li>
 </ul>
@@ -201,14 +202,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -217,7 +210,9 @@
         
               <div>
                 
-  <div class="cell docutils container">
+  <div class="section" id="cluster-analysis">
+<h1>Cluster Analysis<a class="headerlink" href="#cluster-analysis" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -232,84 +227,8 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">choice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/choice_100.csv&quot;</span><span class="p">)</span>
-<span class="n">choice</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_96621</span><span class="o">/</span><span class="mf">2734729813.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">choice</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/choice_100.csv&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">choice</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/util/_decorators.py</span> in <span class="ni">wrapper</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">309</span>                     <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">310</span>                 <span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">311</span>             <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">312</span> 
-<span class="g g-Whitespace">    </span><span class="mi">313</span>         <span class="k">return</span> <span class="n">wrapper</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">584</span>     <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">585</span> 
-<span class="ne">--&gt; </span><span class="mi">586</span>     <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">587</span> 
-<span class="g g-Whitespace">    </span><span class="mi">588</span> 
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">480</span> 
-<span class="g g-Whitespace">    </span><span class="mi">481</span>     <span class="c1"># Create the parser.</span>
-<span class="ne">--&gt; </span><span class="mi">482</span>     <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">483</span> 
-<span class="g g-Whitespace">    </span><span class="mi">484</span>     <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">__init__</span><span class="nt">(self, f, engine, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">809</span>             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">810</span> 
-<span class="ne">--&gt; </span><span class="mi">811</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">812</span> 
-<span class="g g-Whitespace">    </span><span class="mi">813</span>     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/readers.py</span> in <span class="ni">_make_engine</span><span class="nt">(self, engine)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1038</span>             <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1039</span>         <span class="c1"># error: Too many arguments for &quot;ParserBase&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1040</span>         <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">engine</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>  <span class="c1"># type: ignore[call-arg]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1041</span> 
-<span class="g g-Whitespace">   </span><span class="mi">1042</span>     <span class="k">def</span> <span class="nf">_failover_to_python</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/c_parser_wrapper.py</span> in <span class="ni">__init__</span><span class="nt">(self, src, **kwds)</span>
-<span class="g g-Whitespace">     </span><span class="mi">49</span> 
-<span class="g g-Whitespace">     </span><span class="mi">50</span>         <span class="c1"># open handles</span>
-<span class="ne">---&gt; </span><span class="mi">51</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_open_handles</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">52</span>         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="g g-Whitespace">     </span><span class="mi">53</span> 
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/parsers/base_parser.py</span> in <span class="ni">_open_handles</span><span class="nt">(self, src, kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">227</span>             <span class="n">memory_map</span><span class="o">=</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-<span class="g g-Whitespace">    </span><span class="mi">228</span>             <span class="n">storage_options</span><span class="o">=</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="ne">--&gt; </span><span class="mi">229</span>             <span class="n">errors</span><span class="o">=</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
-<span class="g g-Whitespace">    </span><span class="mi">230</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">231</span> 
-
-<span class="nn">~/miniconda3/envs/JupyterBook/lib/python3.7/site-packages/pandas/io/common.py</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">705</span>                 <span class="n">encoding</span><span class="o">=</span><span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">706</span>                 <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
-<span class="ne">--&gt; </span><span class="mi">707</span>                 <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">708</span>             <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">709</span>         <span class="k">else</span><span class="p">:</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;./IGTdataSteingroever2014/choice_100.csv&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/lo_100.csv&quot;</span><span class="p">)</span>
-<span class="n">win</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./IGTdataSteingroever2014/wi_100.csv&quot;</span><span class="p">)</span>
-<span class="n">loss</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/agg_all.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -332,149 +251,59 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Losses_1</th>
-      <th>Losses_2</th>
-      <th>Losses_3</th>
-      <th>Losses_4</th>
-      <th>Losses_5</th>
-      <th>Losses_6</th>
-      <th>Losses_7</th>
-      <th>Losses_8</th>
-      <th>Losses_9</th>
-      <th>Losses_10</th>
-      <th>...</th>
-      <th>Losses_91</th>
-      <th>Losses_92</th>
-      <th>Losses_93</th>
-      <th>Losses_94</th>
-      <th>Losses_95</th>
-      <th>Losses_96</th>
-      <th>Losses_97</th>
-      <th>Losses_98</th>
-      <th>Losses_99</th>
-      <th>Losses_100</th>
+      <th>Total</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+      <th>Study</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>Subj_1</th>
-      <td>-200</td>
-      <td>-150</td>
-      <td>0</td>
-      <td>-250</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-350</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1250</td>
+      <th>0</th>
+      <td>7.666667</td>
+      <td>0.080000</td>
+      <td>0.060000</td>
+      <td>0.020000</td>
+      <td>0.473333</td>
+      <td>Fridberg</td>
     </tr>
     <tr>
-      <th>Subj_2</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-250</td>
-      <td>-1250</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <th>1</th>
+      <td>-4.500000</td>
+      <td>0.160000</td>
+      <td>0.173333</td>
+      <td>0.080000</td>
+      <td>0.220000</td>
+      <td>Fridberg</td>
     </tr>
     <tr>
-      <th>Subj_3</th>
-      <td>0</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>-300</td>
-      <td>0</td>
-      <td>-1250</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>...</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>-200</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <th>2</th>
+      <td>-5.000000</td>
+      <td>0.080000</td>
+      <td>0.233333</td>
+      <td>0.066667</td>
+      <td>0.253333</td>
+      <td>Fridberg</td>
     </tr>
     <tr>
-      <th>Subj_4</th>
-      <td>-250</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-200</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1250</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>0</td>
+      <th>3</th>
+      <td>-3.500000</td>
+      <td>0.073333</td>
+      <td>0.226667</td>
+      <td>0.080000</td>
+      <td>0.253333</td>
+      <td>Fridberg</td>
     </tr>
     <tr>
-      <th>Subj_5</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1250</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1250</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>0</td>
+      <th>4</th>
+      <td>0.666667</td>
+      <td>0.066667</td>
+      <td>0.160000</td>
+      <td>0.100000</td>
+      <td>0.306667</td>
+      <td>Fridberg</td>
     </tr>
     <tr>
       <th>...</th>
@@ -484,150 +313,63 @@
       <td>...</td>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
-      <th>Subj_500</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-150</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>-250</td>
-      <td>-25</td>
-      <td>-200</td>
-      <td>0</td>
-      <td>-300</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <th>93</th>
+      <td>2.000000</td>
+      <td>0.160000</td>
+      <td>0.460000</td>
+      <td>0.086667</td>
+      <td>0.293333</td>
+      <td>Wetzels</td>
     </tr>
     <tr>
-      <th>Subj_501</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1250</td>
-      <td>0</td>
-      <td>-250</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>0</td>
+      <th>94</th>
+      <td>14.333333</td>
+      <td>0.033333</td>
+      <td>0.206667</td>
+      <td>0.306667</td>
+      <td>0.453333</td>
+      <td>Wetzels</td>
     </tr>
     <tr>
-      <th>Subj_502</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-150</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>-250</td>
-      <td>-25</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1250</td>
-      <td>0</td>
+      <th>95</th>
+      <td>9.666667</td>
+      <td>0.120000</td>
+      <td>0.126667</td>
+      <td>0.246667</td>
+      <td>0.506667</td>
+      <td>Wetzels</td>
     </tr>
     <tr>
-      <th>Subj_503</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-200</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-250</td>
-      <td>0</td>
-      <td>0</td>
+      <th>96</th>
+      <td>8.000000</td>
+      <td>0.166667</td>
+      <td>0.200000</td>
+      <td>0.293333</td>
+      <td>0.340000</td>
+      <td>Wetzels</td>
     </tr>
     <tr>
-      <th>Subj_504</th>
-      <td>0</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>0</td>
-      <td>-50</td>
-      <td>-350</td>
-      <td>0</td>
-      <td>-25</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <th>97</th>
+      <td>-12.000000</td>
+      <td>0.073333</td>
+      <td>0.693333</td>
+      <td>0.040000</td>
+      <td>0.193333</td>
+      <td>Wetzels</td>
     </tr>
   </tbody>
 </table>
-<p>504 rows × 100 columns</p>
+<p>617 rows × 6 columns</p>
 </div></div></div>
 </div>
+<p>100 has most studies, 95 has 1 and 150 in between.
+if i do totals of each picked and amount won for each dataset and normalise the amount of number of trials and decks picked over total picks.</p>
+<p>could also look at if its really after 50th trial they start to go one way or the other.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">])</span>
 <span class="c1"># plt.xlim(-180,180)</span>
 <span class="c1"># plt.ylim(-90,90)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -635,12 +377,62 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_3_0.png" src="_images/clustering_3_0.png" />
+<img alt="_images/clustering_4_0.png" src="_images/clustering_4_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="c1"># 1t for rows and second for columns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">])</span>
+<span class="c1"># plt.xlim(-180,180)</span>
+<span class="c1"># plt.ylim(-90,90)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_5_0.png" src="_images/clustering_5_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">])</span>
+<span class="c1"># plt.xlim(-180,180)</span>
+<span class="c1"># plt.ylim(-90,90)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_6_0.png" src="_images/clustering_6_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">])</span>
+<span class="c1"># plt.xlim(-180,180)</span>
+<span class="c1"># plt.ylim(-90,90)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_7_0.png" src="_images/clustering_7_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_8_0.png" src="_images/clustering_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># 1t for rows and second for columns</span>
 <span class="n">x</span>
 </pre></div>
 </div>
@@ -664,35 +456,35 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Choice_2</th>
-      <th>Choice_3</th>
+      <th>Total</th>
+      <th>A</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>Subj_1</th>
-      <td>1</td>
-      <td>2</td>
+      <th>0</th>
+      <td>7.666667</td>
+      <td>0.080000</td>
     </tr>
     <tr>
-      <th>Subj_2</th>
-      <td>1</td>
-      <td>4</td>
+      <th>1</th>
+      <td>-4.500000</td>
+      <td>0.160000</td>
     </tr>
     <tr>
-      <th>Subj_3</th>
-      <td>2</td>
-      <td>3</td>
+      <th>2</th>
+      <td>-5.000000</td>
+      <td>0.080000</td>
     </tr>
     <tr>
-      <th>Subj_4</th>
-      <td>3</td>
-      <td>4</td>
+      <th>3</th>
+      <td>-3.500000</td>
+      <td>0.073333</td>
     </tr>
     <tr>
-      <th>Subj_5</th>
-      <td>2</td>
-      <td>2</td>
+      <th>4</th>
+      <td>0.666667</td>
+      <td>0.066667</td>
     </tr>
     <tr>
       <th>...</th>
@@ -700,33 +492,33 @@
       <td>...</td>
     </tr>
     <tr>
-      <th>Subj_500</th>
-      <td>2</td>
-      <td>1</td>
+      <th>93</th>
+      <td>2.000000</td>
+      <td>0.160000</td>
     </tr>
     <tr>
-      <th>Subj_501</th>
-      <td>4</td>
-      <td>4</td>
+      <th>94</th>
+      <td>14.333333</td>
+      <td>0.033333</td>
     </tr>
     <tr>
-      <th>Subj_502</th>
-      <td>4</td>
-      <td>3</td>
+      <th>95</th>
+      <td>9.666667</td>
+      <td>0.120000</td>
     </tr>
     <tr>
-      <th>Subj_503</th>
-      <td>4</td>
-      <td>1</td>
+      <th>96</th>
+      <td>8.000000</td>
+      <td>0.166667</td>
     </tr>
     <tr>
-      <th>Subj_504</th>
-      <td>3</td>
-      <td>3</td>
+      <th>97</th>
+      <td>-12.000000</td>
+      <td>0.073333</td>
     </tr>
   </tbody>
 </table>
-<p>504 rows × 2 columns</p>
+<p>617 rows × 2 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -750,47 +542,161 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 2, 2, 2, 0, 2, 0, 0, 1, 1, 2, 2, 0, 1, 1, 1, 0, 2, 1, 2, 2, 1,
-       0, 0, 0, 2, 2, 2, 0, 2, 1, 2, 1, 1, 1, 2, 1, 1, 2, 0, 1, 2, 1, 0,
-       0, 2, 0, 2, 0, 0, 2, 2, 1, 2, 2, 0, 0, 2, 2, 0, 0, 0, 2, 0, 0, 0,
-       2, 0, 0, 1, 0, 2, 2, 2, 0, 0, 0, 0, 1, 2, 2, 1, 1, 2, 2, 0, 2, 0,
-       0, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 1, 2, 2, 0, 0, 1, 0, 1, 2, 0,
-       0, 1, 0, 1, 2, 1, 0, 2, 2, 0, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1,
-       0, 0, 0, 1, 1, 1, 0, 2, 2, 1, 1, 2, 1, 1, 1, 0, 0, 1, 0, 2, 1, 1,
-       2, 0, 1, 2, 1, 1, 1, 0, 2, 2, 0, 0, 0, 1, 0, 2, 1, 2, 2, 1, 0, 0,
-       1, 0, 2, 1, 0, 2, 2, 2, 1, 0, 0, 2, 2, 0, 0, 0, 1, 0, 0, 2, 2, 0,
-       0, 0, 0, 2, 1, 0, 1, 0, 0, 2, 1, 0, 2, 1, 2, 1, 0, 2, 0, 1, 0, 2,
-       2, 2, 2, 2, 1, 2, 2, 0, 2, 0, 0, 0, 2, 1, 0, 2, 1, 0, 1, 2, 0, 1,
-       1, 1, 0, 0, 2, 0, 2, 2, 1, 0, 0, 2, 2, 0, 0, 2, 0, 2, 1, 0, 1, 1,
-       0, 0, 1, 0, 1, 0, 2, 0, 1, 2, 1, 2, 2, 1, 2, 0, 0, 1, 0, 0, 2, 1,
-       2, 2, 2, 2, 0, 0, 0, 2, 2, 1, 0, 0, 1, 0, 2, 0, 1, 0, 2, 0, 2, 0,
-       0, 1, 2, 1, 1, 1, 2, 2, 2, 1, 2, 0, 1, 1, 0, 2, 0, 1, 0, 0, 2, 2,
-       1, 0, 2, 1, 0, 1, 0, 2, 0, 1, 0, 0, 0, 2, 1, 1, 2, 0, 0, 0, 2, 0,
-       2, 0, 2, 1, 2, 2, 2, 0, 2, 2, 2, 1, 2, 1, 0, 1, 2, 2, 0, 2, 2, 1,
-       2, 1, 2, 0, 2, 1, 0, 0, 0, 2, 0, 2, 0, 2, 0, 0, 2, 2, 1, 0, 0, 1,
-       2, 2, 1, 2, 0, 2, 1, 0, 1, 0, 2, 2, 0, 1, 2, 1, 0, 0, 2, 2, 0, 1,
-       0, 1, 2, 2, 0, 0, 2, 1, 2, 0, 0, 0, 2, 2, 2, 0, 1, 2, 1, 1, 0, 0,
-       2, 2, 0, 2, 1, 0, 1, 1, 1, 0, 1, 2, 2, 0, 1, 2, 0, 1, 0, 1, 1, 2,
-       1, 0, 2, 1, 1, 2, 1, 0, 0, 1, 0, 2, 0, 1, 2, 0, 1, 2, 0, 1, 1, 1,
-       1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 2, 1, 1, 2],
-      dtype=int32)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0,
+       1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0,
+       0, 2, 0, 0, 0, 2, 0, 0, 1, 1, 2, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0,
+       0, 1, 2, 0, 0, 0, 0, 0, 1, 0, 2, 0, 2, 1, 0, 0, 0, 2, 2, 1, 2, 2,
+       2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 1, 0, 2, 1, 0, 1, 2, 0, 2, 2, 0,
+       0, 0, 0, 2, 0, 2, 0, 1, 2, 0, 0, 2, 0, 2, 2, 0, 1, 2, 0, 0, 0, 1,
+       1, 0, 2, 0, 2, 2, 1, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 2, 2, 2, 2, 1,
+       1, 0, 2, 2, 0, 0, 1, 2, 0, 2, 0, 2, 0, 1, 0, 0, 0, 0, 1, 0, 1, 2,
+       0, 1, 0, 1, 0, 2, 2, 0, 0, 1, 1, 0, 0, 1, 0, 2, 2, 0, 0, 1, 0, 0,
+       0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 2, 0, 0, 0, 2, 0, 2, 0, 2, 0,
+       2, 2, 2, 1, 2, 0, 0, 1, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 1, 1,
+       0, 0, 2, 0, 1, 0, 2, 0, 0, 2, 2, 1, 2, 0, 0, 0, 1, 0, 2, 0, 2, 1,
+       2, 0, 1, 1, 2, 0, 0, 1, 2, 2, 0, 1, 2, 0, 0, 0, 0, 1, 0, 2, 1, 0,
+       2, 2, 1, 2, 0, 0, 0, 0, 2, 1, 0, 0, 0, 2, 1, 2, 1, 2, 0, 2, 1, 1,
+       0, 2, 1, 2, 1, 2, 2, 0, 2, 0, 1, 2, 0, 2, 0, 2, 0, 2, 0, 1, 2, 1,
+       2, 0, 1, 1, 0, 1, 0, 1, 0, 2, 0, 1, 1, 1, 1, 0, 2, 2, 1, 1, 1, 0,
+       1, 0, 0, 1, 1, 0, 2, 0, 0, 1, 0, 2, 0, 1, 2, 0, 0, 0, 1, 1, 1, 0,
+       0, 0, 2, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 2, 1, 2, 2, 2,
+       1, 2, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 2, 0, 1, 0, 0,
+       0, 1, 2, 1, 1, 1, 1, 0, 2, 1, 0, 1, 0, 2, 0, 1, 1, 0, 2, 0, 1, 0,
+       1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0,
+       1, 2, 1, 0, 0, 2, 0, 1, 1, 1, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 2, 1,
+       0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
+       0, 1, 1, 2, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 1, 2, 2, 2, 1, 0, 2, 0,
+       2, 2, 0, 2, 1, 0, 2, 0, 2, 0, 2, 2, 0, 1, 0, 0, 1, 2, 1, 1, 2, 1,
+       1, 1, 2, 1, 0, 2, 2, 0, 0, 0, 0, 2, 0, 1, 2, 0, 0, 0, 1, 0, 2, 0,
+       2, 2, 1, 2, 0, 0, 2, 0, 0, 2, 2, 1, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2,
+       0, 2, 2, 2, 2, 1, 0, 1, 1, 0, 2, 0, 2, 2, 2, 2, 1, 2, 0, 2, 2, 2,
+       1], dtype=int32)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_with_clusters</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_with_clusters</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">identified_clusters</span> 
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Choice_2&#39;</span><span class="p">],</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Choice_3&#39;</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f51de5c5ed0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f544c013d50&gt;
 </pre></div>
 </div>
-<img alt="_images/clustering_7_1.png" src="_images/clustering_7_1.png" />
+<img alt="_images/clustering_12_1.png" src="_images/clustering_12_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span> <span class="c1"># 1t for rows and second for columns</span>
+<span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Total</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.666667</td>
+      <td>0.060000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-4.500000</td>
+      <td>0.173333</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-5.000000</td>
+      <td>0.233333</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-3.500000</td>
+      <td>0.226667</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.666667</td>
+      <td>0.160000</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>2.000000</td>
+      <td>0.460000</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>14.333333</td>
+      <td>0.206667</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>9.666667</td>
+      <td>0.126667</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>8.000000</td>
+      <td>0.200000</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>-12.000000</td>
+      <td>0.693333</td>
+    </tr>
+  </tbody>
+</table>
+<p>617 rows × 2 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">data_with_clusters</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">identified_clusters</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f544bfa23d0&gt;
+</pre></div>
+</div>
+<img alt="_images/clustering_14_1.png" src="_images/clustering_14_1.png" />
+</div>
 </div>
 </div>
 
@@ -823,6 +729,15 @@
 
 <div class='prev-next-bottom'>
     
+    <div id="prev">
+        <a class="left-prev" href="data-processing.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Data Processing</p>
+            </div>
+        </a>
+    </div>
 
 </div>
         
@@ -832,7 +747,7 @@
     <div class="container">
       <p>
         
-          By The Jupyter Book Community<br/>
+          By Cliodhna McAuley<br/>
         
             &copy; Copyright 2021.<br/>
       </p>
