@@ -1,5 +1,8 @@
 # CA4015_Assignment_1 - Clustering
 
+**Name**: Cliodhna McAuley 
+**Student No.**: 18416482
+
 ## The Iowa Gambling Task
 
 This assignment is a clustering analysis of data from the [Iowa Gambling Task](https://en.wikipedia.org/wiki/Iowa_gambling_task).
@@ -11,5 +14,5 @@ The link to the data paper I used, 'Data from 617 Healthy Participants Performin
 ## My Book
 
 * You can build the book using `jupyter-book build Book`.
-* It is also hosted [here](https://mcauleyc.github.io/CA4015_Assignment_1/_build/html/intro.html).
+* It is also hosted [here](https://mcauleyc.github.io/CA4015_Assignment_1/intro.html.
 * A pdf version of the book is also available in the PDF section of this repository.
