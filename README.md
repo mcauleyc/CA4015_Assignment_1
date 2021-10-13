@@ -1,9 +1,9 @@
 # CA4015_Assignment_1 - Clustering
 
-[Here](https://github.com/mcauleyc/CA4015_Assignment_1) is my gthub repository.
-
 **Name:** Cliodhna McAuley <br>
 **Student No.:** 18416482
+
+[Here](https://github.com/mcauleyc/CA4015_Assignment_1) is my gthub repository.
 
 ## The Iowa Gambling Task
 
