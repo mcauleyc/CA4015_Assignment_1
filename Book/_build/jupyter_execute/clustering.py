@@ -18,6 +18,8 @@ sns.set_palette('gnuplot2', n_colors=10)
 from sklearn.cluster import KMeans
 from collections import Counter
 from sklearn.metrics import silhouette_score
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 
 
 # In[2]:
@@ -321,11 +323,85 @@ print(np.mean(good_l))
 
 # ## 3. Preserving the Privacy of Each Lab
 # 
-# Next, I wanted to find a way to obtain similar clustering results while preserving the privacy of each lab. To do this I decided to perform clustering on each lab's results separately and then cluster their centroids to see if it gave similar results to clustering the data from all of the labs together.
+# Next, I wanted to find a way to obtain similar clustering results while preserving the privacy of each lab. 
+
+# ### 3.1 Using PCA
+# 
+# Principal Component Analysis, or PCA, is a way to reduce the dimensionality of a dataset. It also is able to provide some degree of privacy to the data.
+
+# First I dropped the columns that were not numeric and useful.
+
+# In[17]:
+
+
+x = df.drop(columns = ['Subj','Study', 'StudyNo', 'Payload'])
+
+
+# I then performed PCA for two components and added them to a dataframe with the study number and payload.
+
+# In[18]:
+
+
+pca = PCA(n_components=2)
+principalComponents = pca.fit_transform(x)
+principalDf = pd.DataFrame(data = principalComponents
+             , columns = ['principal component 1', 'principal component 2'])
+pca_df = pd.concat([principalDf, df[['StudyNo', 'Payload']]], axis = 1)
+# https://towardsdatascience.com/pca-using-python-scikit-learn-e653f8989e60
+
+pca_df
+
+
+# I then got the elbow and silhouette scores and chose 7 as my optimal *k*.
+
+# In[19]:
+
+
+elbow_score(principalDf)
+
+pca_sil = sil_value(principalDf)
+pca_k = pca_sil.index(max(pca_sil)) + 2
+
+plt.plot([3,4,5,6,7,8,9,10], pca_sil)
+plt.title('Optimal k for pca')
+plt.xlabel('silhouette score')
+plt.ylabel('k')
+plt.show()
+
+
+# I then clustered the data and made graphs showing the clusters, the payload, and the study.
+
+# In[20]:
+
+
+pca_kmeans = KMeans(7)
+pca_kmeans.fit(pca_df)
+pca_identified_clusters = pca_kmeans.fit_predict(pca_df)
+
+pca_data_with_clusters = pca_df.copy()
+pca_data_with_clusters['Clusters'] = pca_identified_clusters 
+sns.lmplot(data=pca_data_with_clusters, x='principal component 1', y='principal component 2', hue='Clusters', 
+                   fit_reg=False, legend=True)
+
+
+sns.lmplot(data=pca_data_with_clusters, x='principal component 1', y='principal component 2', hue='Payload', 
+                   fit_reg=False, legend=True, palette='rainbow')
+
+
+
+sns.lmplot(data=pca_df, x='principal component 1', y='principal component 2', hue='StudyNo', 
+                   fit_reg=False, legend=True)
+
+
+# These graphs do not look like the graphs I made before. There is more data in the top left quadrant of the graph. There does not seem to be much correlation between the clusters and the payoff but cluster 4 seems to be made up of majority payload 3 studies. There is no clear connection between these clusters and the studies.
+
+# ### 3.2 Using Centroids
+# 
+# To do this I decided to perform clustering on each lab's results separately and then cluster their centroids to see if it gave similar results to clustering the data from all of the labs together. For this example I will use the same analysis as before, the 'Total' and the "good" decks.
 
 # I looped through the studies and got the silhouette score for each study. I then performed k-means clustering on the data from each study. I added the centroid of each cluste to a dataframe called 'centroids'.
 
-# In[17]:
+# In[21]:
 
 
 centroids = pd.DataFrame(columns = ['Total', 'Good', 'StudyNo'])
@@ -356,7 +432,7 @@ print(centroids)
 
 # Here is a graph of all the centroids. As you can see, it is similar to the graph for all datapoints when plotting 'Total' and 'Good'. It also still captures that some studies had more variation in their 'Total' or in the amount a "good" deck was chosen. For example, the 6th study had people choosing "good" decks all the time and some people never choosing them. In contrast, the people in study 4 mostly chose a "good" deck somewhere between 40% and 80% of the time.
 
-# In[18]:
+# In[22]:
 
 
 sns.lmplot(data=centroids, x='Total', y='Good', hue='StudyNo', 
@@ -365,7 +441,7 @@ sns.lmplot(data=centroids, x='Total', y='Good', hue='StudyNo',
 
 # This is where I got the optimal *k* for the centroids data and performed clustering on it. 
 
-# In[19]:
+# In[23]:
 
 
 centroid_good = centroids.iloc[:,[0,1]]
@@ -394,3 +470,7 @@ sns.lmplot(data=centroid_good_data_with_clusters, x='Total', y='Good', hue='Clus
 # The clusters show the same as the original clusters that the smaller clusters are on the edge because there are less datapoints there and the ones in the middle are bigger. 
 
 # Overall, I would say that this method of preserving privacy is fine if you just want to understand the overall picture of the data and see roughly what way the data would look if it was clustered. However if you want to perform deeper analysis on the data it would not be very useful.
+
+# ## Conclusion
+# 
+# There are some interesting insights to be learned from this data when it has been clustered. There are relationships between the amount won or lost and the decks chosen, and the payload for the amount deck C was rewarding or penalising may have impacted the way that participants made their decisions. It is also harder to gain insight into the data as a whole when the privacy of each study is preserved.

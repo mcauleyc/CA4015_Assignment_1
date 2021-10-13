@@ -90,7 +90,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Iowa Gambling Task
+   The Iowa Gambling Task
   </a>
  </li>
 </ul>
@@ -252,6 +252,23 @@
   <a class="reference internal nav-link" href="#preserving-the-privacy-of-each-lab">
    3. Preserving the Privacy of Each Lab
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-pca">
+     3.1 Using PCA
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-centroids">
+     3.2 Using Centroids
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
  </li>
 </ul>
 
@@ -279,6 +296,8 @@
 <span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 </pre></div>
 </div>
 </div>
@@ -701,35 +720,35 @@ b(i) = \min_{i{\neq}j} \frac{1}{\lvert C_{j}\rvert} \sum_{j{\in}C_{j}} d(i,j)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2, 1, 1, 1, 5, 2, 1, 5, 1, 2, 1, 1, 5, 1, 5, 0, 1, 1, 2, 4, 4, 5,
-       4, 2, 1, 5, 5, 5, 1, 5, 5, 4, 4, 1, 5, 1, 5, 4, 5, 2, 2, 1, 5, 1,
-       5, 2, 1, 5, 1, 2, 1, 5, 4, 0, 2, 5, 5, 5, 4, 4, 1, 1, 1, 5, 0, 5,
-       4, 0, 2, 5, 5, 1, 1, 1, 4, 5, 3, 1, 2, 4, 5, 5, 5, 2, 2, 4, 3, 5,
-       2, 1, 5, 4, 5, 1, 2, 5, 1, 5, 2, 4, 1, 2, 0, 1, 4, 2, 5, 2, 2, 1,
-       5, 1, 1, 5, 5, 2, 5, 4, 2, 5, 5, 2, 1, 2, 2, 5, 0, 5, 5, 1, 5, 4,
-       0, 1, 2, 5, 2, 2, 4, 5, 5, 1, 2, 2, 5, 1, 2, 1, 1, 2, 2, 2, 5, 4,
-       4, 5, 3, 5, 1, 1, 4, 2, 1, 2, 1, 2, 1, 4, 1, 5, 5, 5, 0, 5, 4, 5,
-       5, 0, 1, 4, 1, 2, 2, 5, 1, 4, 0, 5, 1, 6, 5, 2, 2, 1, 5, 0, 5, 5,
-       5, 5, 5, 1, 2, 2, 1, 5, 5, 5, 3, 5, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1,
-       3, 2, 2, 4, 3, 5, 5, 4, 3, 2, 1, 5, 1, 5, 2, 5, 5, 4, 5, 3, 4, 4,
-       1, 5, 2, 1, 4, 5, 2, 1, 1, 2, 2, 4, 2, 5, 1, 1, 4, 5, 2, 1, 2, 0,
-       5, 4, 4, 4, 2, 5, 5, 0, 2, 2, 5, 4, 2, 1, 5, 4, 1, 4, 1, 3, 0, 1,
-       2, 2, 4, 5, 5, 5, 1, 5, 2, 4, 1, 4, 4, 2, 4, 3, 0, 3, 1, 2, 6, 0,
-       4, 3, 4, 3, 0, 3, 2, 5, 3, 5, 4, 3, 1, 2, 5, 3, 4, 3, 5, 4, 2, 0,
-       3, 1, 4, 0, 1, 4, 1, 0, 1, 5, 1, 4, 0, 4, 4, 4, 3, 2, 0, 4, 4, 1,
-       6, 1, 1, 4, 4, 5, 2, 1, 1, 0, 4, 2, 5, 4, 5, 4, 1, 1, 4, 4, 0, 5,
-       1, 5, 2, 4, 4, 1, 1, 1, 0, 0, 4, 4, 1, 4, 4, 1, 0, 2, 4, 2, 2, 2,
-       0, 3, 1, 5, 4, 1, 4, 6, 5, 5, 1, 4, 1, 1, 4, 4, 4, 2, 1, 0, 5, 4,
-       1, 4, 2, 4, 4, 0, 4, 1, 2, 4, 5, 4, 1, 3, 1, 6, 0, 5, 3, 1, 4, 1,
-       0, 4, 5, 4, 1, 5, 4, 4, 4, 6, 4, 1, 1, 4, 0, 0, 1, 0, 4, 1, 0, 4,
-       4, 2, 4, 1, 1, 3, 1, 4, 0, 0, 0, 3, 6, 6, 1, 0, 4, 3, 4, 0, 2, 0,
-       1, 2, 1, 5, 0, 1, 1, 1, 4, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 0, 4, 1,
-       5, 4, 4, 3, 5, 1, 1, 1, 5, 5, 4, 1, 5, 1, 4, 5, 2, 2, 4, 5, 3, 5,
-       3, 2, 1, 2, 4, 5, 2, 1, 2, 5, 2, 2, 1, 4, 1, 5, 4, 2, 4, 0, 5, 4,
-       4, 4, 3, 0, 5, 2, 3, 5, 5, 5, 5, 5, 1, 4, 2, 5, 5, 1, 4, 5, 2, 1,
-       5, 3, 4, 3, 1, 5, 3, 5, 1, 2, 2, 4, 5, 5, 5, 2, 5, 3, 5, 5, 5, 2,
-       5, 2, 5, 2, 2, 4, 5, 4, 1, 1, 2, 1, 5, 2, 2, 2, 4, 2, 5, 2, 2, 2,
-       4], dtype=int32)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([4, 3, 3, 3, 0, 4, 3, 0, 3, 4, 3, 3, 0, 3, 0, 1, 3, 3, 4, 6, 6, 0,
+       6, 4, 3, 0, 0, 0, 3, 0, 0, 6, 6, 3, 0, 3, 0, 6, 0, 4, 4, 3, 0, 3,
+       0, 4, 3, 0, 3, 4, 3, 0, 6, 1, 4, 0, 0, 0, 6, 6, 3, 3, 3, 0, 1, 0,
+       6, 1, 4, 0, 0, 3, 3, 3, 6, 0, 2, 3, 4, 6, 0, 0, 0, 4, 4, 6, 2, 0,
+       4, 3, 0, 6, 0, 3, 4, 0, 3, 0, 4, 6, 3, 4, 1, 3, 6, 4, 0, 4, 4, 3,
+       0, 3, 3, 0, 0, 4, 0, 6, 4, 0, 0, 4, 3, 4, 4, 0, 1, 0, 0, 3, 0, 6,
+       1, 3, 4, 0, 4, 4, 6, 0, 0, 3, 4, 4, 0, 3, 4, 3, 3, 4, 4, 4, 0, 6,
+       6, 0, 2, 0, 3, 3, 6, 4, 3, 4, 3, 4, 3, 6, 3, 0, 0, 0, 1, 0, 6, 0,
+       0, 1, 3, 6, 3, 4, 4, 0, 3, 6, 1, 0, 3, 5, 0, 4, 4, 3, 0, 1, 0, 0,
+       0, 0, 0, 3, 4, 4, 3, 0, 0, 0, 2, 0, 4, 3, 3, 3, 4, 3, 4, 3, 4, 3,
+       2, 4, 4, 6, 2, 0, 0, 6, 2, 4, 3, 0, 3, 0, 4, 0, 0, 6, 0, 2, 6, 6,
+       3, 0, 4, 3, 6, 0, 4, 3, 3, 4, 4, 6, 4, 0, 3, 3, 6, 0, 4, 3, 4, 1,
+       0, 6, 6, 6, 4, 0, 0, 1, 4, 4, 0, 6, 4, 3, 0, 6, 3, 6, 3, 2, 1, 3,
+       4, 4, 6, 0, 0, 0, 3, 0, 4, 6, 3, 6, 6, 4, 6, 2, 1, 2, 3, 4, 5, 1,
+       6, 2, 6, 2, 1, 2, 4, 0, 2, 0, 6, 2, 3, 4, 0, 2, 6, 2, 0, 6, 4, 1,
+       2, 3, 6, 1, 3, 6, 3, 1, 3, 0, 3, 6, 1, 6, 6, 6, 2, 4, 1, 6, 6, 3,
+       5, 3, 3, 6, 6, 0, 4, 3, 3, 1, 6, 4, 0, 6, 0, 6, 3, 3, 6, 6, 1, 0,
+       3, 0, 4, 6, 6, 3, 3, 3, 1, 1, 6, 6, 3, 6, 6, 3, 1, 4, 6, 4, 4, 4,
+       1, 2, 3, 0, 6, 3, 6, 5, 0, 0, 3, 6, 3, 3, 6, 6, 6, 4, 3, 1, 0, 6,
+       3, 6, 4, 6, 6, 1, 6, 3, 4, 6, 0, 6, 3, 2, 3, 5, 1, 0, 2, 3, 6, 3,
+       1, 6, 0, 6, 3, 0, 6, 6, 6, 5, 6, 3, 3, 6, 1, 1, 3, 1, 6, 3, 1, 6,
+       6, 4, 6, 3, 3, 2, 3, 6, 1, 1, 1, 2, 5, 5, 3, 1, 6, 2, 6, 1, 4, 1,
+       3, 4, 3, 0, 1, 3, 3, 3, 6, 3, 3, 3, 3, 6, 3, 3, 3, 3, 3, 1, 6, 3,
+       0, 6, 6, 2, 0, 3, 3, 3, 0, 0, 6, 3, 0, 3, 6, 0, 4, 4, 6, 0, 2, 0,
+       2, 4, 3, 4, 6, 0, 4, 3, 4, 0, 4, 4, 3, 6, 3, 0, 6, 4, 6, 1, 0, 6,
+       6, 6, 2, 1, 0, 4, 2, 0, 0, 0, 0, 0, 3, 6, 4, 0, 0, 3, 6, 0, 4, 3,
+       0, 2, 6, 2, 3, 0, 2, 0, 3, 4, 4, 6, 0, 0, 0, 4, 4, 2, 0, 0, 0, 4,
+       0, 4, 0, 4, 4, 6, 0, 6, 3, 3, 4, 3, 0, 4, 4, 4, 6, 4, 0, 4, 4, 4,
+       6], dtype=int32)
 </pre></div>
 </div>
 </div>
@@ -746,7 +765,7 @@ b(i) = \min_{i{\neq}j} \frac{1}{\lvert C_{j}\rvert} \sum_{j{\in}C_{j}} d(i,j)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f25243f0f50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb5582df650&gt;
 </pre></div>
 </div>
 <img alt="_images/clustering_20_1.png" src="_images/clustering_20_1.png" />
@@ -761,7 +780,7 @@ b(i) = \min_{i{\neq}j} \frac{1}{\lvert C_{j}\rvert} \sum_{j{\in}C_{j}} d(i,j)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f25243ca750&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb5582bf090&gt;
 </pre></div>
 </div>
 <img alt="_images/clustering_22_1.png" src="_images/clustering_22_1.png" />
@@ -817,7 +836,7 @@ b(i) = \min_{i{\neq}j} \frac{1}{\lvert C_{j}\rvert} \sum_{j{\in}C_{j}} d(i,j)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f252dadfc10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb55800f590&gt;
 </pre></div>
 </div>
 <img alt="_images/clustering_27_1.png" src="_images/clustering_27_1.png" />
@@ -939,7 +958,198 @@ b(i) = \min_{i{\neq}j} \frac{1}{\lvert C_{j}\rvert} \sum_{j{\in}C_{j}} d(i,j)
 </div>
 <div class="section" id="preserving-the-privacy-of-each-lab">
 <h2>3. Preserving the Privacy of Each Lab<a class="headerlink" href="#preserving-the-privacy-of-each-lab" title="Permalink to this headline">¶</a></h2>
-<p>Next, I wanted to find a way to obtain similar clustering results while preserving the privacy of each lab. To do this I decided to perform clustering on each lab’s results separately and then cluster their centroids to see if it gave similar results to clustering the data from all of the labs together.</p>
+<p>Next, I wanted to find a way to obtain similar clustering results while preserving the privacy of each lab.</p>
+<div class="section" id="using-pca">
+<h3>3.1 Using PCA<a class="headerlink" href="#using-pca" title="Permalink to this headline">¶</a></h3>
+<p>Principal Component Analysis, or PCA, is a way to reduce the dimensionality of a dataset. It also is able to provide some degree of privacy to the data.</p>
+<p>First I dropped the columns that were not numeric and useful.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Subj&#39;</span><span class="p">,</span><span class="s1">&#39;Study&#39;</span><span class="p">,</span> <span class="s1">&#39;StudyNo&#39;</span><span class="p">,</span> <span class="s1">&#39;Payload&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I then performed PCA for two components and added them to a dataframe with the study number and payload.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">principalComponents</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">principalDf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">principalComponents</span>
+             <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;principal component 1&#39;</span><span class="p">,</span> <span class="s1">&#39;principal component 2&#39;</span><span class="p">])</span>
+<span class="n">pca_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">principalDf</span><span class="p">,</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;StudyNo&#39;</span><span class="p">,</span> <span class="s1">&#39;Payload&#39;</span><span class="p">]]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># https://towardsdatascience.com/pca-using-python-scikit-learn-e653f8989e60</span>
+
+<span class="n">pca_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>principal component 1</th>
+      <th>principal component 2</th>
+      <th>StudyNo</th>
+      <th>Payload</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-13.875027</td>
+      <td>-0.317474</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.341599</td>
+      <td>-0.071472</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6.130536</td>
+      <td>-0.110633</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.761851</td>
+      <td>-0.107813</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-2.819895</td>
+      <td>-0.101765</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>612</th>
+      <td>-3.757980</td>
+      <td>-0.293730</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>613</th>
+      <td>-16.102065</td>
+      <td>-0.053414</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>614</th>
+      <td>-11.436426</td>
+      <td>-0.046602</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>615</th>
+      <td>-9.766207</td>
+      <td>-0.009333</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>616</th>
+      <td>10.245009</td>
+      <td>-0.271539</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>617 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>I then got the elbow and silhouette scores and chose 7 as my optimal <em>k</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elbow_score</span><span class="p">(</span><span class="n">principalDf</span><span class="p">)</span>
+
+<span class="n">pca_sil</span> <span class="o">=</span> <span class="n">sil_value</span><span class="p">(</span><span class="n">principalDf</span><span class="p">)</span>
+<span class="n">pca_k</span> <span class="o">=</span> <span class="n">pca_sil</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">pca_sil</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">pca_sil</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Optimal k for pca&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;silhouette score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_44_0.png" src="_images/clustering_44_0.png" />
+<img alt="_images/clustering_44_1.png" src="_images/clustering_44_1.png" />
+</div>
+</div>
+<p>I then clustered the data and made graphs showing the clusters, the payload, and the study.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca_kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">pca_kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pca_df</span><span class="p">)</span>
+<span class="n">pca_identified_clusters</span> <span class="o">=</span> <span class="n">pca_kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">pca_df</span><span class="p">)</span>
+
+<span class="n">pca_data_with_clusters</span> <span class="o">=</span> <span class="n">pca_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">pca_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pca_identified_clusters</span> 
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pca_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;principal component 1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;principal component 2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Clusters&#39;</span><span class="p">,</span> 
+                   <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pca_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;principal component 1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;principal component 2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Payload&#39;</span><span class="p">,</span> 
+                   <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span>
+
+
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pca_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;principal component 1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;principal component 2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;StudyNo&#39;</span><span class="p">,</span> 
+                   <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb55a4ce4d0&gt;
+</pre></div>
+</div>
+<img alt="_images/clustering_46_1.png" src="_images/clustering_46_1.png" />
+<img alt="_images/clustering_46_2.png" src="_images/clustering_46_2.png" />
+<img alt="_images/clustering_46_3.png" src="_images/clustering_46_3.png" />
+</div>
+</div>
+<p>These graphs do not look like the graphs I made before. There is more data in the top left quadrant of the graph. There does not seem to be much correlation between the clusters and the payoff but cluster 4 seems to be made up of majority payload 3 studies. There is no clear connection between these clusters and the studies.</p>
+</div>
+<div class="section" id="using-centroids">
+<h3>3.2 Using Centroids<a class="headerlink" href="#using-centroids" title="Permalink to this headline">¶</a></h3>
+<p>To do this I decided to perform clustering on each lab’s results separately and then cluster their centroids to see if it gave similar results to clustering the data from all of the labs together. For this example I will use the same analysis as before, the ‘Total’ and the “good” decks.</p>
 <p>I looped through the studies and got the silhouette score for each study. I then performed k-means clustering on the data from each study. I added the centroid of each cluste to a dataframe called ‘centroids’.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -975,60 +1185,60 @@ b(i) = \min_{i{\neq}j} \frac{1}{\lvert C_{j}\rvert} \sum_{j{\in}C_{j}} d(i,j)
 0   -3.710526  0.503158      1.0
 1   10.052632  0.705263      1.0
 2   11.500000  0.703333      2.0
-3   -7.875000  0.470625      2.0
+3   -7.441176  0.462941      2.0
 4    0.803571  0.518571      2.0
-5  -23.000000  0.173333      2.0
+5  -13.261905  0.326190      2.0
 6    4.703704  0.548889      2.0
-7  -13.400000  0.318500      2.0
-8   -3.384615  0.460769      2.0
-9   17.200000  0.800000      2.0
+7  -23.000000  0.173333      2.0
+8   17.200000  0.800000      2.0
+9   -3.208333  0.465000      2.0
 10   7.894737  0.591579      2.0
-11 -16.375000  0.477500      3.0
-12   7.485714  0.685714      3.0
-13  -2.741667  0.558333      3.0
-14 -28.975000  0.370000      3.0
-15   1.842105  0.589474      4.0
-16  -8.000000  0.426250      4.0
-17  12.692308  0.755385      4.0
-18   1.700000  0.592500      5.0
-19  18.016667  0.766667      5.0
+11  -2.741667  0.558333      3.0
+12 -28.975000  0.370000      3.0
+13   7.485714  0.685714      3.0
+14 -16.375000  0.477500      3.0
+15   1.541667  0.581667      4.0
+16  12.303571  0.753571      4.0
+17  -8.000000  0.426250      4.0
+18  25.050000  0.807500      5.0
+19  -8.712500  0.587500      5.0
 20 -21.150000  0.440000      5.0
-21  35.700000  0.860000      5.0
-22  -8.712500  0.587500      5.0
-23 -36.950000  0.230000      5.0
-24   9.366667  0.706667      5.0
-25  25.050000  0.807500      5.0
+21   1.700000  0.592500      5.0
+22 -36.950000  0.230000      5.0
+23  18.016667  0.766667      5.0
+24  35.700000  0.860000      5.0
+25   9.366667  0.706667      5.0
 26 -14.825000  0.520000      5.0
-27 -10.111111  0.346667      6.0
+27  -2.212121  0.456364      6.0
 28   9.666667  0.725926      6.0
-29   3.095238  0.546190      6.0
-30 -25.333333  0.043333      6.0
-31  16.285714  0.893333      6.0
-32  25.000000  1.000000      6.0
-33  -2.212121  0.456364      6.0
+29 -10.111111  0.346667      6.0
+30  25.000000  1.000000      6.0
+31   3.095238  0.546190      6.0
+32 -25.333333  0.043333      6.0
+33  16.285714  0.893333      6.0
 34 -14.888889  0.262222      6.0
 35 -15.300000  0.301000      7.0
 36   6.562500  0.618750      7.0
-37  17.285714  0.825714      7.0
-38  -3.450000  0.511000      7.0
+37  -3.450000  0.511000      7.0
+38  17.285714  0.825714      7.0
 39  -8.807692  0.417692      7.0
-40 -22.750000  0.175000      7.0
-41  11.000000  0.728000      7.0
-42   1.700000  0.532000      7.0
-43  -2.793651  0.450476      8.0
-44  10.933333  0.699333      8.0
-45  -5.973214  0.547500      9.0
-46 -36.383333  0.238333      9.0
-47  22.042857  0.815714      9.0
-48 -21.757500  0.431000      9.0
-49   3.970833  0.685833      9.0
-50 -14.974138  0.486897      9.0
-51 -10.316000  0.506400      9.0
-52  11.034615  0.726154      9.0
-53  -2.050000  0.600000      9.0
-54 -12.068182  0.387273     10.0
-55  -2.152174  0.540870     10.0
-56  31.250000  0.830000     10.0
+40   1.700000  0.532000      7.0
+41 -22.750000  0.175000      7.0
+42  11.000000  0.728000      7.0
+43  10.933333  0.699333      8.0
+44  -2.793651  0.450476      8.0
+45  11.034615  0.726154      9.0
+46 -15.393548  0.480323      9.0
+47 -10.405769  0.506154      9.0
+48 -22.326471  0.432353      9.0
+49 -36.383333  0.238333      9.0
+50  22.042857  0.815714      9.0
+51  -2.050000  0.600000      9.0
+52  -5.973214  0.547500      9.0
+53   3.970833  0.685833      9.0
+54  -2.152174  0.540870     10.0
+55  31.250000  0.830000     10.0
+56 -12.068182  0.387273     10.0
 </pre></div>
 </div>
 </div>
@@ -1042,10 +1252,10 @@ b(i) = \min_{i{\neq}j} \frac{1}{\lvert C_{j}\rvert} \sum_{j{\in}C_{j}} d(i,j)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f252449ef10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb544c461d0&gt;
 </pre></div>
 </div>
-<img alt="_images/clustering_41_1.png" src="_images/clustering_41_1.png" />
+<img alt="_images/clustering_52_1.png" src="_images/clustering_52_1.png" />
 </div>
 </div>
 <p>This is where I got the optimal <em>k</em> for the centroids data and performed clustering on it.</p>
@@ -1076,16 +1286,21 @@ b(i) = \min_{i{\neq}j} \frac{1}{\lvert C_{j}\rvert} \sum_{j{\in}C_{j}} d(i,j)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_43_0.png" src="_images/clustering_43_0.png" />
-<img alt="_images/clustering_43_1.png" src="_images/clustering_43_1.png" />
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7f251c701390&gt;
+<img alt="_images/clustering_54_0.png" src="_images/clustering_54_0.png" />
+<img alt="_images/clustering_54_1.png" src="_images/clustering_54_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb544ac0bd0&gt;
 </pre></div>
 </div>
-<img alt="_images/clustering_43_3.png" src="_images/clustering_43_3.png" />
+<img alt="_images/clustering_54_3.png" src="_images/clustering_54_3.png" />
 </div>
 </div>
 <p>The clusters show the same as the original clusters that the smaller clusters are on the edge because there are less datapoints there and the ones in the middle are bigger.</p>
 <p>Overall, I would say that this method of preserving privacy is fine if you just want to understand the overall picture of the data and see roughly what way the data would look if it was clustered. However if you want to perform deeper analysis on the data it would not be very useful.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>There are some interesting insights to be learned from this data when it has been clustered. There are relationships between the amount won or lost and the decks chosen, and the payload for the amount deck C was rewarding or penalising may have impacted the way that participants made their decisions. It is also harder to gain insight into the data as a whole when the privacy of each study is preserved.</p>
 </div>
 </div>
 
