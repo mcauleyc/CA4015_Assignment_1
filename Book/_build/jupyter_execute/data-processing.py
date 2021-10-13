@@ -2,6 +2,11 @@
 # coding: utf-8
 
 # # Data Processing
+# 
+# This is where I cleaned and processed the datasets that were given. I did this in three steps:
+# 1. Data cleaning
+# 2. Merging the Data
+# 3. Aggregating the Data
 
 # In[1]:
 
@@ -9,6 +14,8 @@
 import pandas as pd
 import numpy as np
 
+
+# Firstly, I read in each dataset and used `pandas.DataFrame.head()` to get an idea of what the datasets looked like.
 
 # In[2]:
 
@@ -27,8 +34,6 @@ wi_150 = pd.read_csv("./data/wi_150.csv")
 wi_95 = pd.read_csv("./data/wi_95.csv")
 
 
-# I used .head() to see what each type of dataframe looked like
-
 # In[3]:
 
 
@@ -38,53 +43,53 @@ print(lo_100.head())
 print(wi_100.head())
 
 
-# # Part 1
-# First I will go through each individual dataframe and see if there are any obvious errors, data type differences and and nulls that should be changed.
+# ## 1. Data Cleaning
+# 
+# My first step was data cleaning. I went through each individual dataframe to see if there were any obvious errors, data type differences or any nulls that needed to be changed.
 
 # In[4]:
 
 
-print(choice_95.info())
-print(choice_100.info())
-print(choice_150.info())
+print(choice_95.info(verbose=False))
+print(choice_100.info(verbose=False))
+print(choice_150.info(verbose=False))
+print(index_95.info(verbose=False))
+print(index_100.info(verbose=False))
+print(index_150.info(verbose=False))
+print(lo_95.info(verbose=False))
+print(lo_100.info(verbose=False))
+print(lo_150.info(verbose=False))
+print(wi_95.info(verbose=False))
+print(wi_100.info(verbose=False))
+print(wi_150.info(verbose=False))
 
 
 # In[5]:
 
 
-print(index_95.info())
-print(index_100.info())
-print(index_150.info())
+print(choice_100.isnull().values.any())
+print(choice_150.isnull().values.any())
+print(choice_95.isnull().values.any())
+print(index_100.isnull().values.any())
+print(index_150.isnull().values.any())
+print(index_95.isnull().values.any())
+print(lo_100.isnull().values.any())
+print(lo_150.isnull().values.any())
+print(lo_95.isnull().values.any())
+print(wi_100.isnull().values.any())
+print(wi_150.isnull().values.any())
+print(wi_95.isnull().values.any())
 
+
+# All columns were non-null and of the same type (int64), so I did not need to change any datatypes. The data was already clean.
+
+# ## 2. Merging the Datasets
+# 
+# In this step, I merged the datasets to include choice, amount won/lost, and index.
+
+# I began by changing the column names in the wins and losses datasets to 'Total_{n}'. This made the merging of the two dataframes easier because I was then able to use `pandas.DataFrame.add()`to get the total amount won or lost for each choice.  
 
 # In[6]:
-
-
-print(lo_95.info())
-print(lo_100.info())
-print(lo_150.info())
-
-
-# In[7]:
-
-
-print(wi_95.info())
-print(wi_100.info())
-print(wi_150.info())
-
-
-# All columns are non-null and of the same type (int64), so I did not need to change any datatypes.
-
-# # Part 2
-# Now I will merge the datasets to include choice, amount won/lost and index.
-
-# I begin by changing the column names in the wins and losses datasets to 'Total_{n}'. This made the merging of the two dataframes easier because I was then able to use 
-# ```
-# pandas.DataFrame.add()
-# ```
-# to get the total amount won or loss for each choice.  
-
-# In[8]:
 
 
 ld, wd = {}, {}
@@ -99,9 +104,9 @@ total_95 = wi_95.add(lo_95)
 total_95
 
 
-# I then joined all_95 with choice_95 so that the all_95 now contains the total amount won or lost and the choice that was made for each round.
+# I then joined 'total_95' with 'choice_95' so that the dataframe, 'all_95', now contains the total amount won or lost and the choice that was made for each round. The columns alternate between total and choice because it is easier to understand that way.
 
-# In[9]:
+# In[7]:
 
 
 all_95 = total_95.join(choice_95)
@@ -112,9 +117,9 @@ all_95 = all_95[cols]
 all_95
 
 
-# I then changed the cells in index_95 to be in the form 'Subj_{}' and set that column as the index and joined it with all_95.
+# I changed the cells in 'index_95' to be in the form 'Subj_{}' and set that column as the index. I then joined it with 'all_95'.
 
-# In[10]:
+# In[8]:
 
 
 index_95['Subj'] = index_95['Subj'].apply(lambda x: 'Subj_' + str(x))
@@ -123,9 +128,9 @@ index_95.index.name = None
 all_95 = all_95.join(index_95)
 
 
-# Finally, I changed the order of the columns in the dataframe so that it was more easily readable and I could understand it more. I made it to go in alternating order of total won/lost and choice made, and then the study name is the final column. I also added multilevel columns to make each trial separate. I then exported the file in csv format to the data folder in my book.
+# Finally, I added multilevel columns to make each trial separate. I then exported the file in csv format to the data folder in my book.
 
-# In[11]:
+# In[9]:
 
 
 l = []
@@ -139,9 +144,9 @@ all_95.to_csv(("./data/all_95.csv"))
 print(all_95.head())
 
 
-# I will now continue to do this for the two other dataframe amounts; 100 and 150.
+# I repeated this process for the other datasets.
 
-# In[12]:
+# In[10]:
 
 
 ld, wd = {}, {}
@@ -176,7 +181,7 @@ all_100.to_csv(("./data/all_100.csv"))
 print(all_100.head())
 
 
-# In[13]:
+# In[11]:
 
 
 ld, wd = {}, {}
@@ -211,12 +216,13 @@ all_150.to_csv(("./data/all_150.csv"))
 print(all_150.head())
 
 
-# # Part 3
+# ## 3. Aggregating the Data
 # 
-# Now I will aggregate the 'all' dataframes to and normalise them.
-# 
+# Then, I aggregated the 'all' dataframes into one dataframe and normalised the data.
 
-# In[14]:
+# I began by adding up each choice option so that I had the total number of times A, B, C and D were picked. For the purposes of this task I assumed that 1 was 'A', 2 was 'B' etc. I then added the totals so that I could see the total amount won or lost by each participant. I then added these columns as well as study to a dataframe named 'agg_95'.
+
+# In[12]:
 
 
 data = []
@@ -237,13 +243,15 @@ for row in all_95.iterrows():
                 
         else:
             total += i
-    data.append([total, a, b, c, d, list(row[1])[-1]])
+    data.append(['95_' + row[1].name, total, a, b, c, d, list(row[1])[-1]])
 
-agg_95 = pd.DataFrame(data, columns=['Total', 'A', 'B', 'C', 'D', 'Study'])
+agg_95 = pd.DataFrame(data, columns=['Subj', 'Total', 'A', 'B', 'C', 'D', 'Study'])
 agg_95
 
 
-# In[15]:
+# This was then repeated for 100 and 150.
+
+# In[13]:
 
 
 data = []
@@ -264,13 +272,13 @@ for row in all_100.iterrows():
                 
         else:
             total += i
-    data.append([total, a, b, c, d, list(row[1])[-1]])
+    data.append(['100_' + row[1].name, total, a, b, c, d, list(row[1])[-1]])
 
-agg_100 = pd.DataFrame(data, columns=['Total', 'A', 'B', 'C', 'D', 'Study'])
+agg_100 = pd.DataFrame(data, columns=['Subj','Total', 'A', 'B', 'C', 'D', 'Study'])
 agg_100
 
 
-# In[16]:
+# In[14]:
 
 
 data = []
@@ -291,26 +299,47 @@ for row in all_150.iterrows():
                 
         else:
             total += i
-    data.append([total, a, b, c, d, list(row[1])[-1]])
+    data.append(['150_' + row[1].name, total, a, b, c, d, list(row[1])[-1]])
 
-agg_150 = pd.DataFrame(data, columns=['Total', 'A', 'B', 'C', 'D', 'Study'])
+agg_150 = pd.DataFrame(data, columns=['Subj', 'Total', 'A', 'B', 'C', 'D', 'Study'])
 agg_150
 
 
-# In[17]:
+# I then normalised them by dividing each dataframe by the amount of trials it contained.
+
+# In[15]:
 
 
 agg_150[['Total', 'A', 'B', 'C', 'D']]/= 150
-agg_100[['Total', 'A', 'B', 'C', 'D']]/= 150
-agg_95[['Total', 'A', 'B', 'C', 'D']]/= 150
+agg_100[['Total', 'A', 'B', 'C', 'D']]/= 100
+agg_95[['Total', 'A', 'B', 'C', 'D']]/= 95
 
 
-# In[18]:
+# I then added in a 'Good' column (the sum of C and D), a 'Bad' column (the sum of A and B), a column for the numeric representation of each study and a column with the payload of the study. I then saved the dataframe as a csv file in the data folder under 'agg_all.csv'.
+
+# In[16]:
 
 
 agg_all = pd.concat([agg_95, agg_100, agg_150])
-agg_all.reset_index(drop=True)
+agg_all.reset_index(inplace=True, drop=True)
+agg_all['Bad'] = agg_all['A'] + agg_all['B']
+agg_all['Good'] = agg_all['C'] + agg_all['D']
 
-agg_all.to_csv(("./data/agg_all.csv"))
+agg_all['StudyNo'] = ''   
+agg_all['Payload'] = ''
+
+stud_d = {'Fridberg': 1, 'Horstmann': 2, 'Kjome': 3, 'Maia': 4, 'Premkumar': 5, 'Steingroever2011': 6, 
+    'SteingroverInPrep': 7, 'Wetzels': 8, 'Wood': 9, 'Worthy': 10}
+payload_d = {'Fridberg': 1, 'Horstmann': 2, 'Kjome': 3, 'Maia': 1, 'Premkumar': 3, 'Steingroever2011': 2, 
+    'SteingroverInPrep': 2, 'Wetzels': 2, 'Wood': 3, 'Worthy': 1}
+
+for i in range(0, len(agg_all)):
+    agg_all.loc[i, 'StudyNo'] = stud_d[agg_all['Study'][i]]
+    agg_all.loc[i, 'Payload'] = payload_d[agg_all['Study'][i]]
+
+
+agg_all.to_csv("./data/agg_all.csv")
 agg_all
 
+
+# The data was then ready for me to use in my cluster analysis.

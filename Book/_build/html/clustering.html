@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cluster Analysis &#8212; Clustering Analysis of Iowa Gambling Task</title>
+    <title>Cluster Analysis &#8212; Clustering Analysis of the Iowa Gambling Task</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -74,10 +76,10 @@
         
       
       
-      <img src="_static/DCU-logo.jpg" class="logo" alt="logo">
+      <img src="_static/IGT_logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Clustering Analysis of Iowa Gambling Task</h1>
+      <h1 class="site-logo" id="site-title">Clustering Analysis of the Iowa Gambling Task</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -88,7 +90,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Iowa Gambling Task
+   The Iowa Gambling Task
   </a>
  </li>
 </ul>
@@ -202,6 +204,75 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-optimal-number-of-clusters">
+   1. The Optimal Number of Clusters
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-elbow-method">
+     1.1 The Elbow Method
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-silhouette-method">
+     1.2 The Silhouette Method
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#clustering-the-data">
+   2. Clustering the Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#performing-clustering-on-deck-c">
+     2.1 Performing Clustering on Deck C
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#performing-clustering-on-good-decks">
+     2.2 Performing Clustering on “Good” Decks
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#further-analysis-of-good-decks">
+     2.3 Further Analysis of “Good” Decks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preserving-the-privacy-of-each-lab">
+   3. Preserving the Privacy of Each Lab
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-pca">
+     3.1 Using PCA
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-centroids">
+     3.2 Using Centroids
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -212,6 +283,7 @@
                 
   <div class="section" id="cluster-analysis">
 <h1>Cluster Analysis<a class="headerlink" href="#cluster-analysis" title="Permalink to this headline">¶</a></h1>
+<p>Cluster analysis or clustering is the task of grouping a set of objects in such a way that objects in the same group are more similar to each other than to those in other groups.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -220,14 +292,22 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s1">&#39;gnuplot2&#39;</span><span class="p">,</span> <span class="n">n_colors</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/agg_all.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_95</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/all_95.csv&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">all_100</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/all_100.csv&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">all_150</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/all_150.csv&quot;</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./data/agg_all.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -251,59 +331,89 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>Subj</th>
       <th>Total</th>
       <th>A</th>
       <th>B</th>
       <th>C</th>
       <th>D</th>
       <th>Study</th>
+      <th>Bad</th>
+      <th>Good</th>
+      <th>StudyNo</th>
+      <th>Payload</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>7.666667</td>
-      <td>0.080000</td>
-      <td>0.060000</td>
-      <td>0.020000</td>
-      <td>0.473333</td>
+      <td>95_Subj_1</td>
+      <td>12.105263</td>
+      <td>0.126316</td>
+      <td>0.094737</td>
+      <td>0.031579</td>
+      <td>0.747368</td>
       <td>Fridberg</td>
+      <td>0.221053</td>
+      <td>0.778947</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>-4.500000</td>
-      <td>0.160000</td>
-      <td>0.173333</td>
-      <td>0.080000</td>
-      <td>0.220000</td>
+      <td>95_Subj_2</td>
+      <td>-7.105263</td>
+      <td>0.252632</td>
+      <td>0.273684</td>
+      <td>0.126316</td>
+      <td>0.347368</td>
       <td>Fridberg</td>
+      <td>0.526316</td>
+      <td>0.473684</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-5.000000</td>
-      <td>0.080000</td>
-      <td>0.233333</td>
-      <td>0.066667</td>
-      <td>0.253333</td>
+      <td>95_Subj_3</td>
+      <td>-7.894737</td>
+      <td>0.126316</td>
+      <td>0.368421</td>
+      <td>0.105263</td>
+      <td>0.400000</td>
       <td>Fridberg</td>
+      <td>0.494737</td>
+      <td>0.505263</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>-3.500000</td>
-      <td>0.073333</td>
-      <td>0.226667</td>
-      <td>0.080000</td>
-      <td>0.253333</td>
+      <td>95_Subj_4</td>
+      <td>-5.526316</td>
+      <td>0.115789</td>
+      <td>0.357895</td>
+      <td>0.126316</td>
+      <td>0.400000</td>
       <td>Fridberg</td>
+      <td>0.473684</td>
+      <td>0.526316</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.666667</td>
-      <td>0.066667</td>
-      <td>0.160000</td>
-      <td>0.100000</td>
-      <td>0.306667</td>
+      <td>95_Subj_5</td>
+      <td>1.052632</td>
+      <td>0.105263</td>
+      <td>0.252632</td>
+      <td>0.157895</td>
+      <td>0.484211</td>
       <td>Fridberg</td>
+      <td>0.357895</td>
+      <td>0.642105</td>
+      <td>1</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>...</th>
@@ -313,338 +423,216 @@
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>93</th>
+      <th>612</th>
+      <td>150_Subj_94</td>
       <td>2.000000</td>
       <td>0.160000</td>
       <td>0.460000</td>
       <td>0.086667</td>
       <td>0.293333</td>
       <td>Wetzels</td>
+      <td>0.620000</td>
+      <td>0.380000</td>
+      <td>8</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>94</th>
+      <th>613</th>
+      <td>150_Subj_95</td>
       <td>14.333333</td>
       <td>0.033333</td>
       <td>0.206667</td>
       <td>0.306667</td>
       <td>0.453333</td>
       <td>Wetzels</td>
+      <td>0.240000</td>
+      <td>0.760000</td>
+      <td>8</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>95</th>
+      <th>614</th>
+      <td>150_Subj_96</td>
       <td>9.666667</td>
       <td>0.120000</td>
       <td>0.126667</td>
       <td>0.246667</td>
       <td>0.506667</td>
       <td>Wetzels</td>
+      <td>0.246667</td>
+      <td>0.753333</td>
+      <td>8</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>96</th>
+      <th>615</th>
+      <td>150_Subj_97</td>
       <td>8.000000</td>
       <td>0.166667</td>
       <td>0.200000</td>
       <td>0.293333</td>
       <td>0.340000</td>
       <td>Wetzels</td>
+      <td>0.366667</td>
+      <td>0.633333</td>
+      <td>8</td>
+      <td>2</td>
     </tr>
     <tr>
-      <th>97</th>
+      <th>616</th>
+      <td>150_Subj_98</td>
       <td>-12.000000</td>
       <td>0.073333</td>
       <td>0.693333</td>
       <td>0.040000</td>
       <td>0.193333</td>
       <td>Wetzels</td>
-    </tr>
-  </tbody>
-</table>
-<p>617 rows × 6 columns</p>
-</div></div></div>
-</div>
-<p>100 has most studies, 95 has 1 and 150 in between.
-if i do totals of each picked and amount won for each dataset and normalise the amount of number of trials and decks picked over total picks.</p>
-<p>could also look at if its really after 50th trial they start to go one way or the other.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">])</span>
-<span class="c1"># plt.xlim(-180,180)</span>
-<span class="c1"># plt.ylim(-90,90)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/clustering_4_0.png" src="_images/clustering_4_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">])</span>
-<span class="c1"># plt.xlim(-180,180)</span>
-<span class="c1"># plt.ylim(-90,90)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/clustering_5_0.png" src="_images/clustering_5_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">])</span>
-<span class="c1"># plt.xlim(-180,180)</span>
-<span class="c1"># plt.ylim(-90,90)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/clustering_6_0.png" src="_images/clustering_6_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">])</span>
-<span class="c1"># plt.xlim(-180,180)</span>
-<span class="c1"># plt.ylim(-90,90)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/clustering_7_0.png" src="_images/clustering_7_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/clustering_8_0.png" src="_images/clustering_8_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:</span><span class="mi">2</span><span class="p">]</span> <span class="c1"># 1t for rows and second for columns</span>
-<span class="n">x</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Total</th>
-      <th>A</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>7.666667</td>
-      <td>0.080000</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>-4.500000</td>
-      <td>0.160000</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>-5.000000</td>
-      <td>0.080000</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>-3.500000</td>
-      <td>0.073333</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.666667</td>
-      <td>0.066667</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>93</th>
-      <td>2.000000</td>
-      <td>0.160000</td>
-    </tr>
-    <tr>
-      <th>94</th>
-      <td>14.333333</td>
-      <td>0.033333</td>
-    </tr>
-    <tr>
-      <th>95</th>
-      <td>9.666667</td>
-      <td>0.120000</td>
-    </tr>
-    <tr>
-      <th>96</th>
-      <td>8.000000</td>
-      <td>0.166667</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>-12.000000</td>
-      <td>0.073333</td>
-    </tr>
-  </tbody>
-</table>
-<p>617 rows × 2 columns</p>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KMeans(n_clusters=3)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">identified_clusters</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">identified_clusters</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 2, 1, 1, 0,
-       1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0,
-       0, 2, 0, 0, 0, 2, 0, 0, 1, 1, 2, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0,
-       0, 1, 2, 0, 0, 0, 0, 0, 1, 0, 2, 0, 2, 1, 0, 0, 0, 2, 2, 1, 2, 2,
-       2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 1, 0, 2, 1, 0, 1, 2, 0, 2, 2, 0,
-       0, 0, 0, 2, 0, 2, 0, 1, 2, 0, 0, 2, 0, 2, 2, 0, 1, 2, 0, 0, 0, 1,
-       1, 0, 2, 0, 2, 2, 1, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 2, 2, 2, 2, 1,
-       1, 0, 2, 2, 0, 0, 1, 2, 0, 2, 0, 2, 0, 1, 0, 0, 0, 0, 1, 0, 1, 2,
-       0, 1, 0, 1, 0, 2, 2, 0, 0, 1, 1, 0, 0, 1, 0, 2, 2, 0, 0, 1, 0, 0,
-       0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 2, 0, 0, 0, 2, 0, 2, 0, 2, 0,
-       2, 2, 2, 1, 2, 0, 0, 1, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 1, 1,
-       0, 0, 2, 0, 1, 0, 2, 0, 0, 2, 2, 1, 2, 0, 0, 0, 1, 0, 2, 0, 2, 1,
-       2, 0, 1, 1, 2, 0, 0, 1, 2, 2, 0, 1, 2, 0, 0, 0, 0, 1, 0, 2, 1, 0,
-       2, 2, 1, 2, 0, 0, 0, 0, 2, 1, 0, 0, 0, 2, 1, 2, 1, 2, 0, 2, 1, 1,
-       0, 2, 1, 2, 1, 2, 2, 0, 2, 0, 1, 2, 0, 2, 0, 2, 0, 2, 0, 1, 2, 1,
-       2, 0, 1, 1, 0, 1, 0, 1, 0, 2, 0, 1, 1, 1, 1, 0, 2, 2, 1, 1, 1, 0,
-       1, 0, 0, 1, 1, 0, 2, 0, 0, 1, 0, 2, 0, 1, 2, 0, 0, 0, 1, 1, 1, 0,
-       0, 0, 2, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 2, 1, 2, 2, 2,
-       1, 2, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 2, 0, 1, 0, 0,
-       0, 1, 2, 1, 1, 1, 1, 0, 2, 1, 0, 1, 0, 2, 0, 1, 1, 0, 2, 0, 1, 0,
-       1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0,
-       1, 2, 1, 0, 0, 2, 0, 1, 1, 1, 1, 2, 1, 1, 0, 1, 1, 2, 1, 1, 2, 1,
-       0, 2, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
-       0, 1, 1, 2, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 1, 2, 2, 2, 1, 0, 2, 0,
-       2, 2, 0, 2, 1, 0, 2, 0, 2, 0, 2, 2, 0, 1, 0, 0, 1, 2, 1, 1, 2, 1,
-       1, 1, 2, 1, 0, 2, 2, 0, 0, 0, 0, 2, 0, 1, 2, 0, 0, 0, 1, 0, 2, 0,
-       2, 2, 1, 2, 0, 0, 2, 0, 0, 2, 2, 1, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2,
-       0, 2, 2, 2, 2, 1, 0, 1, 1, 0, 2, 0, 2, 2, 2, 2, 1, 2, 0, 2, 2, 2,
-       1], dtype=int32)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_with_clusters</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">identified_clusters</span> 
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f544c013d50&gt;
-</pre></div>
-</div>
-<img alt="_images/clustering_12_1.png" src="_images/clustering_12_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span> <span class="c1"># 1t for rows and second for columns</span>
-<span class="n">y</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Total</th>
-      <th>B</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>7.666667</td>
-      <td>0.060000</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>-4.500000</td>
-      <td>0.173333</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>-5.000000</td>
+      <td>0.766667</td>
       <td>0.233333</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>617 rows × 11 columns</p>
+</div></div></div>
+</div>
+<div class="section" id="the-optimal-number-of-clusters">
+<h2>1. The Optimal Number of Clusters<a class="headerlink" href="#the-optimal-number-of-clusters" title="Permalink to this headline">¶</a></h2>
+<p>There are two methods to find the optimal number of clusters for a dataset, the Elbow Method and the Silhouette Method.</p>
+<div class="section" id="the-elbow-method">
+<h3>1.1 The Elbow Method<a class="headerlink" href="#the-elbow-method" title="Permalink to this headline">¶</a></h3>
+<p>This is the most common method for determining the optimal number of clusters. To do this you must calculate the Within-Cluster-Sum of Squared Errors (WSS) for different values of <em>k</em>, and choose the <em>k</em> for which WSS first starts to diminish. In a plot of WSS-versus-k, this is visible as an elbow.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">elbow_score</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">distortions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K</span><span class="p">:</span>
+        <span class="n">kmeanModel</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">kmeanModel</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">distortions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmeanModel</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">distortions</span><span class="p">,</span> <span class="s1">&#39;bx-&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Distortion&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The Elbow Method showing the optimal k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-silhouette-method">
+<h3>1.2 The Silhouette Method<a class="headerlink" href="#the-silhouette-method" title="Permalink to this headline">¶</a></h3>
+<p>This is a method to  find the optimal number of clusters <em>k</em>. The silhouette value measures how similar a point is to its own cluster (cohesion) compared to other clusters (separation). A high value is desirable. This is the formula:</p>
+<div class="math notranslate nohighlight">
+\[
+s(i) = \frac{b(i) - a(i)}{max(a(i), b(i))}
+\]</div>
+<blockquote>
+<div><p><strong><em>NOTE:</em></strong> <em>s(i)</em> is defined to be equal to zero if <em>i</em> is the only point in the cluster. This is to prevent the number of clusters from increasing significantly with many single-point clusters.</p>
+</div></blockquote>
+<p><em>a(i)</em> is the measure of the similarity of the point <em>i</em> to its own cluster.</p>
+<div class="math notranslate nohighlight">
+\[
+a(i) = \frac{1}{\lvert C_{i}\rvert - 1} \sum_{j{\in}C_{i}, i{\neq}j} d(i,j)
+\]</div>
+<p>Similarly, <em>b(i)</em> is the measure of dissimilarity of <em>i</em> from points in other clusters.</p>
+<div class="math notranslate nohighlight">
+\[
+b(i) = \min_{i{\neq}j} \frac{1}{\lvert C_{j}\rvert} \sum_{j{\in}C_{j}} d(i,j)
+\]</div>
+<p>Where <em>d(i,j)</em> is the euclidean distance between the two points.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sil_value</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">sil</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">kmax</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="c1"># dissimilarity would not be defined for a single cluster, thus, minimum number of clusters should be 2</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">kmax</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+      <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+      <span class="n">sil</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;euclidean&#39;</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">sil</span>
+
+<span class="c1"># https://medium.com/analytics-vidhya/how-to-determine-the-optimal-k-for-k-means-708505d204eb</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="clustering-the-data">
+<h2>2. Clustering the Data<a class="headerlink" href="#clustering-the-data" title="Permalink to this headline">¶</a></h2>
+<p>I chose to perform clustering on the total amount won or lost compared to the amount the participants chose the deck ‘C’. I thought this would be interesting because C was a “good” deck but had frequent losses. The losses also depended on the payload of the study. I wanted to see if the clusters had any relationship to the payload.</p>
+<p>I also wanted to cluster the data comparing the total amount won or lost to the amount of times the participants chose a “good” deck. This would be interesting to see if there was anything in particular that defined each of these clusters.</p>
+<div class="section" id="performing-clustering-on-deck-c">
+<h3>2.1 Performing Clustering on Deck C<a class="headerlink" href="#performing-clustering-on-deck-c" title="Permalink to this headline">¶</a></h3>
+<p>I began by making a dataframe with just ‘Total’ and ‘C’ columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">]]</span> 
+<span class="n">c</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Total</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>12.105263</td>
+      <td>0.031579</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-7.105263</td>
+      <td>0.126316</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-7.894737</td>
+      <td>0.105263</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>-3.500000</td>
-      <td>0.226667</td>
+      <td>-5.526316</td>
+      <td>0.126316</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.666667</td>
-      <td>0.160000</td>
+      <td>1.052632</td>
+      <td>0.157895</td>
     </tr>
     <tr>
       <th>...</th>
@@ -652,51 +640,667 @@ if i do totals of each picked and amount won for each dataset and normalise the 
       <td>...</td>
     </tr>
     <tr>
-      <th>93</th>
+      <th>612</th>
       <td>2.000000</td>
-      <td>0.460000</td>
+      <td>0.086667</td>
     </tr>
     <tr>
-      <th>94</th>
+      <th>613</th>
       <td>14.333333</td>
-      <td>0.206667</td>
+      <td>0.306667</td>
     </tr>
     <tr>
-      <th>95</th>
+      <th>614</th>
       <td>9.666667</td>
-      <td>0.126667</td>
+      <td>0.246667</td>
     </tr>
     <tr>
-      <th>96</th>
+      <th>615</th>
       <td>8.000000</td>
-      <td>0.200000</td>
+      <td>0.293333</td>
     </tr>
     <tr>
-      <th>97</th>
+      <th>616</th>
       <td>-12.000000</td>
-      <td>0.693333</td>
+      <td>0.040000</td>
     </tr>
   </tbody>
 </table>
 <p>617 rows × 2 columns</p>
 </div></div></div>
 </div>
+<p>I then used the elbow method and the silhouette method to find the optimal number of clusters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">data_with_clusters</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">identified_clusters</span> 
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">],</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elbow_score</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f544bfa23d0&gt;
+<img alt="_images/clustering_12_0.png" src="_images/clustering_12_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_sil</span> <span class="o">=</span> <span class="n">sil_value</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">c_sil</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Optimal k for c&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;silhouette score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img alt="_images/clustering_14_1.png" src="_images/clustering_14_1.png" />
 </div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_13_0.png" src="_images/clustering_13_0.png" />
+</div>
+</div>
+<p>It was not completely clear from the elbow method whick value I should use for <em>k</em>. It looked to be between 3 and 7. In the silhouette method the peak was at 10 but there was also a slightly lower peak at 7. For this reason I chose 7 as my <em>k</em> and made 7 clusters.</p>
+<p>I used <code class="docutils literal notranslate"><span class="pre">sklearn.cluster.KMeans</span></code> to create the clusters and fit them to the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">c_kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KMeans(n_clusters=7)
+</pre></div>
+</div>
+</div>
+</div>
+<p>I then find the identified clusters in c.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_identified_clusters</span> <span class="o">=</span> <span class="n">c_kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">c_identified_clusters</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([4, 3, 3, 3, 0, 4, 3, 0, 3, 4, 3, 3, 0, 3, 0, 1, 3, 3, 4, 6, 6, 0,
+       6, 4, 3, 0, 0, 0, 3, 0, 0, 6, 6, 3, 0, 3, 0, 6, 0, 4, 4, 3, 0, 3,
+       0, 4, 3, 0, 3, 4, 3, 0, 6, 1, 4, 0, 0, 0, 6, 6, 3, 3, 3, 0, 1, 0,
+       6, 1, 4, 0, 0, 3, 3, 3, 6, 0, 2, 3, 4, 6, 0, 0, 0, 4, 4, 6, 2, 0,
+       4, 3, 0, 6, 0, 3, 4, 0, 3, 0, 4, 6, 3, 4, 1, 3, 6, 4, 0, 4, 4, 3,
+       0, 3, 3, 0, 0, 4, 0, 6, 4, 0, 0, 4, 3, 4, 4, 0, 1, 0, 0, 3, 0, 6,
+       1, 3, 4, 0, 4, 4, 6, 0, 0, 3, 4, 4, 0, 3, 4, 3, 3, 4, 4, 4, 0, 6,
+       6, 0, 2, 0, 3, 3, 6, 4, 3, 4, 3, 4, 3, 6, 3, 0, 0, 0, 1, 0, 6, 0,
+       0, 1, 3, 6, 3, 4, 4, 0, 3, 6, 1, 0, 3, 5, 0, 4, 4, 3, 0, 1, 0, 0,
+       0, 0, 0, 3, 4, 4, 3, 0, 0, 0, 2, 0, 4, 3, 3, 3, 4, 3, 4, 3, 4, 3,
+       2, 4, 4, 6, 2, 0, 0, 6, 2, 4, 3, 0, 3, 0, 4, 0, 0, 6, 0, 2, 6, 6,
+       3, 0, 4, 3, 6, 0, 4, 3, 3, 4, 4, 6, 4, 0, 3, 3, 6, 0, 4, 3, 4, 1,
+       0, 6, 6, 6, 4, 0, 0, 1, 4, 4, 0, 6, 4, 3, 0, 6, 3, 6, 3, 2, 1, 3,
+       4, 4, 6, 0, 0, 0, 3, 0, 4, 6, 3, 6, 6, 4, 6, 2, 1, 2, 3, 4, 5, 1,
+       6, 2, 6, 2, 1, 2, 4, 0, 2, 0, 6, 2, 3, 4, 0, 2, 6, 2, 0, 6, 4, 1,
+       2, 3, 6, 1, 3, 6, 3, 1, 3, 0, 3, 6, 1, 6, 6, 6, 2, 4, 1, 6, 6, 3,
+       5, 3, 3, 6, 6, 0, 4, 3, 3, 1, 6, 4, 0, 6, 0, 6, 3, 3, 6, 6, 1, 0,
+       3, 0, 4, 6, 6, 3, 3, 3, 1, 1, 6, 6, 3, 6, 6, 3, 1, 4, 6, 4, 4, 4,
+       1, 2, 3, 0, 6, 3, 6, 5, 0, 0, 3, 6, 3, 3, 6, 6, 6, 4, 3, 1, 0, 6,
+       3, 6, 4, 6, 6, 1, 6, 3, 4, 6, 0, 6, 3, 2, 3, 5, 1, 0, 2, 3, 6, 3,
+       1, 6, 0, 6, 3, 0, 6, 6, 6, 5, 6, 3, 3, 6, 1, 1, 3, 1, 6, 3, 1, 6,
+       6, 4, 6, 3, 3, 2, 3, 6, 1, 1, 1, 2, 5, 5, 3, 1, 6, 2, 6, 1, 4, 1,
+       3, 4, 3, 0, 1, 3, 3, 3, 6, 3, 3, 3, 3, 6, 3, 3, 3, 3, 3, 1, 6, 3,
+       0, 6, 6, 2, 0, 3, 3, 3, 0, 0, 6, 3, 0, 3, 6, 0, 4, 4, 6, 0, 2, 0,
+       2, 4, 3, 4, 6, 0, 4, 3, 4, 0, 4, 4, 3, 6, 3, 0, 6, 4, 6, 1, 0, 6,
+       6, 6, 2, 1, 0, 4, 2, 0, 0, 0, 0, 0, 3, 6, 4, 0, 0, 3, 6, 0, 4, 3,
+       0, 2, 6, 2, 3, 0, 2, 0, 3, 4, 4, 6, 0, 0, 0, 4, 4, 2, 0, 0, 0, 4,
+       0, 4, 0, 4, 4, 6, 0, 6, 3, 3, 4, 3, 0, 4, 4, 4, 6, 4, 0, 4, 4, 4,
+       6], dtype=int32)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is a graph of the data with the different clusters shown in different colours.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_data_with_clusters</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">c_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_identified_clusters</span> 
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">c_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Clusters&#39;</span><span class="p">,</span> 
+            <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb5582df650&gt;
+</pre></div>
+</div>
+<img alt="_images/clustering_20_1.png" src="_images/clustering_20_1.png" />
+</div>
+</div>
+<p>Then, for a comparison, I plotted the data using colour to differentiate payload.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">c_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Payload&#39;</span><span class="p">,</span> 
+            <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb5582bf090&gt;
+</pre></div>
+</div>
+<img alt="_images/clustering_22_1.png" src="_images/clustering_22_1.png" />
+</div>
+</div>
+<p>As you can see the datapoints in cluster 6 all chose c less and had the highest loss in the study. All of these data points were in payload 3. This makes sense because these people obviously chose C less because they were getting frequent losses from it and those losses were growing as they went. Most of the people who chose C the most were in payload 2 which is where the losses in C were constant.</p>
+</div>
+<div class="section" id="performing-clustering-on-good-decks">
+<h3>2.2 Performing Clustering on “Good” Decks<a class="headerlink" href="#performing-clustering-on-good-decks" title="Permalink to this headline">¶</a></h3>
+<p>Now I would like to cluster the data based on the “good” card decks to see if there is any insight to be gleamed from it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">good</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">]]</span>
+
+<span class="n">elbow_score</span><span class="p">(</span><span class="n">good</span><span class="p">)</span>
+
+<span class="n">good_sil</span> <span class="o">=</span> <span class="n">sil_value</span><span class="p">(</span><span class="n">good</span><span class="p">)</span>
+<span class="n">good_k</span> <span class="o">=</span> <span class="n">good_sil</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">good_sil</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">good_sil</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Optimal k for good&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;silhouette score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_25_0.png" src="_images/clustering_25_0.png" />
+<img alt="_images/clustering_25_1.png" src="_images/clustering_25_1.png" />
+</div>
+</div>
+<p>There is no clear <em>k</em> from the elbow plot, and the peak at 10 is a fair bit higher than any other peak in the silhouette plot. Therefore, I chose to make 10 clusters this time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">good_kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">good_kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">good</span><span class="p">)</span>
+<span class="n">good_identified_clusters</span> <span class="o">=</span> <span class="n">good_kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">good</span><span class="p">)</span>
+
+<span class="n">good_data_with_clusters</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">good_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">good_identified_clusters</span> 
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">good_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Clusters&#39;</span><span class="p">,</span> 
+                   <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">good_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Payload&#39;</span><span class="p">,</span> 
+                   <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span>
+
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">good_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;StudyNo&#39;</span><span class="p">,</span> 
+                   <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb55800f590&gt;
+</pre></div>
+</div>
+<img alt="_images/clustering_27_1.png" src="_images/clustering_27_1.png" />
+<img alt="_images/clustering_27_2.png" src="_images/clustering_27_2.png" />
+<img alt="_images/clustering_27_3.png" src="_images/clustering_27_3.png" />
+</div>
+</div>
+<p>As you can see from the two graphs, there is obviously a strong correlation between picking “good” decks and winning more money. There does not seem to be any correlation between payload and “good” decks though. Maia et al. frequently asked the participants about their knowledge of the decks at regular intervals during the task. This is study number 4 and is shown in yellow on the graph. Nothing major stands out about this study except there were less people who chose the “bad” decks. It is hard to see because the datapoints for study 4 are all in the centre of the graph but there are a lot less of their datapoints under 0.4 than the other studies.</p>
+</div>
+<div class="section" id="further-analysis-of-good-decks">
+<h3>2.3 Further Analysis of “Good” Decks<a class="headerlink" href="#further-analysis-of-good-decks" title="Permalink to this headline">¶</a></h3>
+<p>I would now like to look more closely at clusters 7 and 9 because they are the most extreme on each side. It is said that after about 50 choices most people begin to see the patterns ang go for the “good” decks more consistently. I want to see if the people in cluster 9 seemed to figure out the pattern and the people in cluster 7 did not.</p>
+<p>I began by getting the number of the good cluster (9) and the bad cluster (7). This is just in case the cluster numbers change at some point.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">good_cluster</span> <span class="o">=</span> <span class="n">good_data_with_clusters</span><span class="p">[</span><span class="n">good_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">max</span><span class="p">(</span><span class="n">good_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">])][</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">bad_cluster</span> <span class="o">=</span> <span class="n">good_data_with_clusters</span><span class="p">[</span><span class="n">good_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">good_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">])][</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">(</span><span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I then found the subjects of the cluster so that I could find out whether they belonged to 95, 100, or 150. I then looked at the choices they made after the first 50 rounds and did some analysis on that.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">good_subj_1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">good_data_with_clusters</span><span class="p">[</span><span class="n">good_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">bad_cluster</span><span class="p">][</span><span class="s1">&#39;Subj&#39;</span><span class="p">])</span>
+<span class="n">good_subj_1</span>
+
+<span class="n">good_lst</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">good_subj_1</span><span class="p">:</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="s1">&#39;100&#39;</span><span class="p">:</span>
+        <span class="n">good_lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_100</span><span class="p">[</span><span class="n">all_100</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">101</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="s1">&#39;150&#39;</span><span class="p">:</span>
+        <span class="n">good_lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_150</span><span class="p">[</span><span class="n">all_150</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">101</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="s1">&#39;95&#39;</span><span class="p">:</span>
+        <span class="n">good_lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_95</span><span class="p">[</span><span class="n">all_95</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">101</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">good_d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="n">good_l</span><span class="p">,</span> <span class="n">no_bad</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">good_lst</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">good_d</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">good_d</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">good_d</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">good_d</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">good_l</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">no_bad</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">good_d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">good_l</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mf">.5</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">good_l</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">no_bad</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">good_l</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;a&#39;: 67, &#39;b&#39;: 239, &#39;c&#39;: 46, &#39;d&#39;: 48}
+6
+8
+[]
+0.3690945336047337
+</pre></div>
+</div>
+</div>
+</div>
+<p>This cluster chose ‘B’ the most and 6 out of 8 people were twice as likely to choose “bad” decks over “good” decks. This shows that the people in this cluster probably did not see the pattern and got distracted by the infrequent losses in Deck B.</p>
+<p>The mean of the ratios between good and bad is 0.369, which shows that the participants in the cluster were far less likely to choose good decks. If the mean was 1 it would mean that the participants chose fairly evenly between the “good” and “bad” decks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">good_subj_2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">good_data_with_clusters</span><span class="p">[</span><span class="n">good_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">good_cluster</span><span class="p">][</span><span class="s1">&#39;Subj&#39;</span><span class="p">])</span>
+<span class="n">good_subj_2</span>
+
+<span class="n">good_lst</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">good_subj_2</span><span class="p">:</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="s1">&#39;100&#39;</span><span class="p">:</span>
+        <span class="n">good_lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_100</span><span class="p">[</span><span class="n">all_100</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">101</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="s1">&#39;150&#39;</span><span class="p">:</span>
+        <span class="n">good_lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_150</span><span class="p">[</span><span class="n">all_150</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">101</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="s1">&#39;95&#39;</span><span class="p">:</span>
+        <span class="n">good_lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_95</span><span class="p">[</span><span class="n">all_95</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">101</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">good_d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="n">good_l</span><span class="p">,</span> <span class="n">no_bad</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">good_lst</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">good_d</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">good_d</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">good_d</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">good_d</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">good_l</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">no_bad</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        
+<span class="nb">print</span><span class="p">(</span><span class="n">good_d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">good_l</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">good_l</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">no_bad</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">good_l</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;a&#39;: 28, &#39;b&#39;: 18, &#39;c&#39;: 516, &#39;d&#39;: 188}
+0
+8
+[Counter({3: 32, 4: 18}), Counter({3: 37, 4: 13}), Counter({3: 50}), Counter({3: 100}), Counter({3: 100})]
+15.049107142857144
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this cluster ‘C’ was chosen the most despite its frequent losses. None of the participants chose the “bad” decks more frequently than the “good” decks, with some people never choosing the bad decks at all. The mean was 15.049 which is very high. This means that the “bad” were barely chosen in comparison to the “good” decks.</p>
+<p>For these reasons I think it is safe to assume that a lot of these participants figured out that the decks C and D contained more rewards than penalties.</p>
+</div>
+</div>
+<div class="section" id="preserving-the-privacy-of-each-lab">
+<h2>3. Preserving the Privacy of Each Lab<a class="headerlink" href="#preserving-the-privacy-of-each-lab" title="Permalink to this headline">¶</a></h2>
+<p>Next, I wanted to find a way to obtain similar clustering results while preserving the privacy of each lab.</p>
+<div class="section" id="using-pca">
+<h3>3.1 Using PCA<a class="headerlink" href="#using-pca" title="Permalink to this headline">¶</a></h3>
+<p>Principal Component Analysis, or PCA, is a way to reduce the dimensionality of a dataset. It also is able to provide some degree of privacy to the data.</p>
+<p>First I dropped the columns that were not numeric and useful.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Subj&#39;</span><span class="p">,</span><span class="s1">&#39;Study&#39;</span><span class="p">,</span> <span class="s1">&#39;StudyNo&#39;</span><span class="p">,</span> <span class="s1">&#39;Payload&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I then performed PCA for two components and added them to a dataframe with the study number and payload.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">principalComponents</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">principalDf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">principalComponents</span>
+             <span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;principal component 1&#39;</span><span class="p">,</span> <span class="s1">&#39;principal component 2&#39;</span><span class="p">])</span>
+<span class="n">pca_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">principalDf</span><span class="p">,</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;StudyNo&#39;</span><span class="p">,</span> <span class="s1">&#39;Payload&#39;</span><span class="p">]]],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># https://towardsdatascience.com/pca-using-python-scikit-learn-e653f8989e60</span>
+
+<span class="n">pca_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>principal component 1</th>
+      <th>principal component 2</th>
+      <th>StudyNo</th>
+      <th>Payload</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-13.875027</td>
+      <td>-0.317474</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5.341599</td>
+      <td>-0.071472</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6.130536</td>
+      <td>-0.110633</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.761851</td>
+      <td>-0.107813</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-2.819895</td>
+      <td>-0.101765</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>612</th>
+      <td>-3.757980</td>
+      <td>-0.293730</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>613</th>
+      <td>-16.102065</td>
+      <td>-0.053414</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>614</th>
+      <td>-11.436426</td>
+      <td>-0.046602</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>615</th>
+      <td>-9.766207</td>
+      <td>-0.009333</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>616</th>
+      <td>10.245009</td>
+      <td>-0.271539</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>617 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>I then got the elbow and silhouette scores and chose 7 as my optimal <em>k</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elbow_score</span><span class="p">(</span><span class="n">principalDf</span><span class="p">)</span>
+
+<span class="n">pca_sil</span> <span class="o">=</span> <span class="n">sil_value</span><span class="p">(</span><span class="n">principalDf</span><span class="p">)</span>
+<span class="n">pca_k</span> <span class="o">=</span> <span class="n">pca_sil</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">pca_sil</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">pca_sil</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Optimal k for pca&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;silhouette score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_44_0.png" src="_images/clustering_44_0.png" />
+<img alt="_images/clustering_44_1.png" src="_images/clustering_44_1.png" />
+</div>
+</div>
+<p>I then clustered the data and made graphs showing the clusters, the payload, and the study.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca_kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">pca_kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pca_df</span><span class="p">)</span>
+<span class="n">pca_identified_clusters</span> <span class="o">=</span> <span class="n">pca_kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">pca_df</span><span class="p">)</span>
+
+<span class="n">pca_data_with_clusters</span> <span class="o">=</span> <span class="n">pca_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">pca_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pca_identified_clusters</span> 
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pca_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;principal component 1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;principal component 2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Clusters&#39;</span><span class="p">,</span> 
+                   <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pca_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;principal component 1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;principal component 2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Payload&#39;</span><span class="p">,</span> 
+                   <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">)</span>
+
+
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pca_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;principal component 1&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;principal component 2&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;StudyNo&#39;</span><span class="p">,</span> 
+                   <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb55a4ce4d0&gt;
+</pre></div>
+</div>
+<img alt="_images/clustering_46_1.png" src="_images/clustering_46_1.png" />
+<img alt="_images/clustering_46_2.png" src="_images/clustering_46_2.png" />
+<img alt="_images/clustering_46_3.png" src="_images/clustering_46_3.png" />
+</div>
+</div>
+<p>These graphs do not look like the graphs I made before. There is more data in the top left quadrant of the graph. There does not seem to be much correlation between the clusters and the payoff but cluster 4 seems to be made up of majority payload 3 studies. There is no clear connection between these clusters and the studies.</p>
+</div>
+<div class="section" id="using-centroids">
+<h3>3.2 Using Centroids<a class="headerlink" href="#using-centroids" title="Permalink to this headline">¶</a></h3>
+<p>To do this I decided to perform clustering on each lab’s results separately and then cluster their centroids to see if it gave similar results to clustering the data from all of the labs together. For this example I will use the same analysis as before, the ‘Total’ and the “good” decks.</p>
+<p>I looped through the studies and got the silhouette score for each study. I then performed k-means clustering on the data from each study. I added the centroid of each cluste to a dataframe called ‘centroids’.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">centroids</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="s1">&#39;StudyNo&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+    
+    <span class="n">study_df</span> <span class="o">=</span>  <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;StudyNo&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">study</span><span class="p">]</span>
+    
+    <span class="n">study_good</span> <span class="o">=</span> <span class="n">study_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">7</span><span class="p">]]</span>
+    <span class="n">study_good_sil</span> <span class="o">=</span> <span class="n">sil_value</span><span class="p">(</span><span class="n">study_good</span><span class="p">)</span>
+    <span class="n">study_good_k</span> <span class="o">=</span> <span class="n">study_good_sil</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">study_good_sil</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="c1">#     plt.plot([3,4,5,6,7,8,9,10], study_good_sil)</span>
+<span class="c1">#     plt.title(&#39;Optimal k for {}&#39;.format(study_df[&#39;Study&#39;].iloc(0)[0]))</span>
+<span class="c1">#     plt.xlabel(&#39;silhouette score&#39;)</span>
+<span class="c1">#     plt.ylabel(&#39;k&#39;)</span>
+<span class="c1">#     plt.show()</span>
+
+    <span class="n">study_good_kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">study_good_k</span><span class="p">)</span>
+    <span class="n">study_good_kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">study_good</span><span class="p">)</span>
+    <span class="n">study_good_identified_clusters</span> <span class="o">=</span> <span class="n">study_good_kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">study_good</span><span class="p">)</span>
+
+    <span class="n">centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">study_good_kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">centers</span><span class="p">:</span>
+        <span class="n">centroids</span> <span class="o">=</span> <span class="n">centroids</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;Total&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Good&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;StudyNo&#39;</span><span class="p">:</span> <span class="n">study</span><span class="p">},</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">centroids</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        Total      Good  StudyNo
+0   -3.710526  0.503158      1.0
+1   10.052632  0.705263      1.0
+2   11.500000  0.703333      2.0
+3   -7.441176  0.462941      2.0
+4    0.803571  0.518571      2.0
+5  -13.261905  0.326190      2.0
+6    4.703704  0.548889      2.0
+7  -23.000000  0.173333      2.0
+8   17.200000  0.800000      2.0
+9   -3.208333  0.465000      2.0
+10   7.894737  0.591579      2.0
+11  -2.741667  0.558333      3.0
+12 -28.975000  0.370000      3.0
+13   7.485714  0.685714      3.0
+14 -16.375000  0.477500      3.0
+15   1.541667  0.581667      4.0
+16  12.303571  0.753571      4.0
+17  -8.000000  0.426250      4.0
+18  25.050000  0.807500      5.0
+19  -8.712500  0.587500      5.0
+20 -21.150000  0.440000      5.0
+21   1.700000  0.592500      5.0
+22 -36.950000  0.230000      5.0
+23  18.016667  0.766667      5.0
+24  35.700000  0.860000      5.0
+25   9.366667  0.706667      5.0
+26 -14.825000  0.520000      5.0
+27  -2.212121  0.456364      6.0
+28   9.666667  0.725926      6.0
+29 -10.111111  0.346667      6.0
+30  25.000000  1.000000      6.0
+31   3.095238  0.546190      6.0
+32 -25.333333  0.043333      6.0
+33  16.285714  0.893333      6.0
+34 -14.888889  0.262222      6.0
+35 -15.300000  0.301000      7.0
+36   6.562500  0.618750      7.0
+37  -3.450000  0.511000      7.0
+38  17.285714  0.825714      7.0
+39  -8.807692  0.417692      7.0
+40   1.700000  0.532000      7.0
+41 -22.750000  0.175000      7.0
+42  11.000000  0.728000      7.0
+43  10.933333  0.699333      8.0
+44  -2.793651  0.450476      8.0
+45  11.034615  0.726154      9.0
+46 -15.393548  0.480323      9.0
+47 -10.405769  0.506154      9.0
+48 -22.326471  0.432353      9.0
+49 -36.383333  0.238333      9.0
+50  22.042857  0.815714      9.0
+51  -2.050000  0.600000      9.0
+52  -5.973214  0.547500      9.0
+53   3.970833  0.685833      9.0
+54  -2.152174  0.540870     10.0
+55  31.250000  0.830000     10.0
+56 -12.068182  0.387273     10.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is a graph of all the centroids. As you can see, it is similar to the graph for all datapoints when plotting ‘Total’ and ‘Good’. It also still captures that some studies had more variation in their ‘Total’ or in the amount a “good” deck was chosen. For example, the 6th study had people choosing “good” decks all the time and some people never choosing them. In contrast, the people in study 4 mostly chose a “good” deck somewhere between 40% and 80% of the time.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">centroids</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;StudyNo&#39;</span><span class="p">,</span> 
+           <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;gnuplot2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb544c461d0&gt;
+</pre></div>
+</div>
+<img alt="_images/clustering_52_1.png" src="_images/clustering_52_1.png" />
+</div>
+</div>
+<p>This is where I got the optimal <em>k</em> for the centroids data and performed clustering on it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">centroid_good</span> <span class="o">=</span> <span class="n">centroids</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+
+<span class="n">elbow_score</span><span class="p">(</span><span class="n">centroid_good</span><span class="p">)</span>
+
+<span class="n">centroid_good_sil</span> <span class="o">=</span> <span class="n">sil_value</span><span class="p">(</span><span class="n">centroid_good</span><span class="p">)</span>
+<span class="n">centroid_good_k</span> <span class="o">=</span> <span class="n">centroid_good_sil</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">centroid_good_sil</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">centroid_good_sil</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Optimal k for centroid_good&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;silhouette score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">centroid_good_kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">centroid_good_kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">centroid_good</span><span class="p">)</span>
+<span class="n">centroid_good_identified_clusters</span> <span class="o">=</span> <span class="n">centroid_good_kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">centroid_good</span><span class="p">)</span>
+
+<span class="n">centroid_good_data_with_clusters</span> <span class="o">=</span> <span class="n">centroids</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">centroid_good_data_with_clusters</span><span class="p">[</span><span class="s1">&#39;Clusters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">centroid_good_identified_clusters</span> 
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">centroid_good_data_with_clusters</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Total&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Good&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Clusters&#39;</span><span class="p">,</span> 
+           <span class="n">fit_reg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_54_0.png" src="_images/clustering_54_0.png" />
+<img alt="_images/clustering_54_1.png" src="_images/clustering_54_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x7fb544ac0bd0&gt;
+</pre></div>
+</div>
+<img alt="_images/clustering_54_3.png" src="_images/clustering_54_3.png" />
+</div>
+</div>
+<p>The clusters show the same as the original clusters that the smaller clusters are on the edge because there are less datapoints there and the ones in the middle are bigger.</p>
+<p>Overall, I would say that this method of preserving privacy is fine if you just want to understand the overall picture of the data and see roughly what way the data would look if it was clustered. However if you want to perform deeper analysis on the data it would not be very useful.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>There are some interesting insights to be learned from this data when it has been clustered. There are relationships between the amount won or lost and the decks chosen, and the payload for the amount deck C was rewarding or penalising may have impacted the way that participants made their decisions. It is also harder to gain insight into the data as a whole when the privacy of each study is preserved.</p>
 </div>
 </div>
 
