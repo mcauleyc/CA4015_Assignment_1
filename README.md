@@ -1,7 +1,7 @@
 # CA4015_Assignment_1 - Clustering
 
-**Name**: Cliodhna McAuley <br>
-**Student No.**: 18416482
+**Name:** Cliodhna McAuley <br>
+**Student No.:** 18416482
 
 ## The Iowa Gambling Task
 
