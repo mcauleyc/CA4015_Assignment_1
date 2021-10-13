@@ -14,5 +14,5 @@ The link to the data paper I used, 'Data from 617 Healthy Participants Performin
 ## My Book
 
 * You can build the book using `jupyter-book build Book`.
-* It is also hosted [here](https://mcauleyc.github.io/CA4015_Assignment_1/intro.html.
+* It is also hosted [here](https://mcauleyc.github.io/CA4015_Assignment_1/intro.html).
 * A pdf version of the book is also available in the PDF section of this repository.
