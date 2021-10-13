@@ -6,6 +6,10 @@ This assignment is a clustering analysis of data from the [Iowa Gambling Task](h
 
 The link to the data paper I used, 'Data from 617 Healthy Participants Performing the Iowa Gambling Task: A “Many Labs” Collaboration' is [here](https://openpsychologydata.metajnl.com/articles/10.5334/jopd.ak/).
 
-My Jupyter Book is [here](https://www.google.com/).
 
-A pdf version of my book is available in the docs section of this repository.
+
+## My Book
+
+* You can build the book using `jupyter-book build Book`.
+* It is also hosted [here](https://mcauleyc.github.io/CA4015_Assignment_1/_build/html/intro.html).
+* A pdf version of the book is also available in the PDF section of this repository.
